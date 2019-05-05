@@ -1,0 +1,44 @@
+# depslib dependency file v1.0
+1557080038 source:c:\users\prudan\desktop\tp2\olivieri.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
+1557079919 c:\users\prudan\desktop\tp2\olivieri.h
+
+1557080387 c:\users\prudan\desktop\tp2\validacion.h
+
+1557079949 source:c:\users\prudan\desktop\tp2\validacion.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
+1557005033 source:c:\users\prudan\desktop\tp2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
+1557079904 source:c:\users\prudan\desktop\tp2\employee.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
+1557080387 c:\users\prudan\desktop\tp2\employee.h
+
+1556935155 c:\users\prudan\desktop\tp2\sector.h
+	"employee.h"
+

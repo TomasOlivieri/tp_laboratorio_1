@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1553050379 source:c:\users\prudan\desktop\tp1\olivieri.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"olivieri.h"
+
+1553354997 source:c:\users\prudan\desktop\tp1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"olivieri.h"
+
+1553354997 c:\users\prudan\desktop\tp1\olivieri.h
+

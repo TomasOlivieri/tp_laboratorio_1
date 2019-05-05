@@ -1,0 +1,11 @@
+int menu();
+int validarNumero(char numero[]);
+int ingresarNumero();
+void mostrarNumeros(int flag1, int flag2, int primerNumero, int segundoNumero);
+int sumar(int primerNumero, int segundoNumero);
+int restar(int primerNumero, int segundoNumero);
+int multiplicar(int primerNumero, int segundoNumero);
+float dividir(int primerNumero, int segundoNumero);
+void mostrarResultados (int flagCalculo, int suma, int resta, int multiplicacion, float division, long long int factorial, int primerNumero, int segundoNumero);
+int cambiarBandera(int numero);
+int ffactorial(int primerNumero);
