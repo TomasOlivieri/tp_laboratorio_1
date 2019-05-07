@@ -28,5 +28,8 @@ void emp_obtenerStringSector (int enteroSector, sSector* sectores, int tamSector
 void sec_showSectores (sSector* sectores, int tamSec);
 void sec_showSector (sSector sector);
 int emp_getSector (char* msg, char* msgError,sSector* sectores, int tamSec, int reintentos, int* sectorEmpleado);
-int emp_modificarEmployee (char* msg, char* msgError, sEmployee* employees, int tamEmp, sSector sectores, int tamSec);
 int isValidID (char* buffer, sEmployee* employees, int tamEmp);
+int emp_modificarEmployee (char* primeraOpcion, char* segundaOpcion ,char* pedidoEmpleado ,char* msg, char* msgError, sEmployee* employees, int tamEmp, sSector* sectores, int tamSec, int reiteracion);
+int getEmployee(sEmployee* employees, int tamEmp, sSector* sectores, int tamSec, int* indice, char* msg, char* msgError);
+int menu_modificacion (char* primeraOpcion, char* segundaOpcion ,char* msgError, char* pedido ,sEmployee* employees, int tamEmp, sSector* sectores, int tamSec, int* opcion);
+int emp_bajaEmpleado (char* msg, char* msgError, sEmployee* employees, int tamEmp, sSector* sectores, int tamSec);

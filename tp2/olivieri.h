@@ -7,4 +7,4 @@ int getName (char* msg, char* msgError, int caracteres, int reintentos, char* no
 int getOpcion (char* msg, int* opcion);
 void menu(char* msg, int* opcion);
 int  getConfirmacion(char* msg, char* msgError);
-//int getEmployee(sEmployee* employees, int tamEmp, sSector sectores, int tamSec, int* indice, char* msg, char* msgError);
+

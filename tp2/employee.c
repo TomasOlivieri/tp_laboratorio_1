@@ -5,6 +5,22 @@
 #include "validacion.h"
 #include "employee.h"
 
+
+#define BAJA_PEDIR "Ingrese el id del empleado que quiera dar de baja: "
+#define BAJA_ERROR "ID invalido o no encontrado\n"
+#define MODIFICACION_PRIMERO "1. Modificar el nombre\n"
+#define MODIFICACION_SEGUNDO "2. Modificar el apellido\n"
+#define MODIFICACION_INGRESE_EMPLEADO "Ingrese el empleado que quiera modificar: "
+#define MODIFICACION_ERROR_LEGAJO "Legajo invalido\n"
+#define MODIFICACION_ELEGIR_EMPLEADO "Elija un empleado para modificar: "
+#define MODIFICACION_PEDIR_NOMBRE "Ingrese el nuevo nombre: "
+#define MODIFICACION_PEDIR_APELLIDO "Ingrese el nuevo apellido: "
+#define ALTA_EXITOSA "\n\nCarga de empleado exitosa\n\n"
+#define ALTA_NO_EXITOSA "\n\nUsted no ha podido ingresar un nuevo empleado\n\n"
+#define MODIFICACION_EXITOSA "Usted modifico un empleado con exito\n"
+#define MODIFICACION_NO_EXITOSA "Usted no ha podido modificar a un empleado\n"
+#define BAJA_EXITOSA "Usted dio de baja a un empleado con exito\n"
+#define BAJA_NO_EXITOSA "Usted no ha podido dar de baja a un empleado\n"
 #define ALTA_PEDIR_NOMBRE "Ingrese un nombre: "
 #define ALTA_PEDIR_APELLIDO "Ingrese un apellido: "
 #define ALTA_PEDIR_SUELDO "Ingrese el sueldo del empleado: "
@@ -13,6 +29,7 @@
 #define ALTA_ERROR_APELLIDO "\nApellido invalido, no puede contener caracteres especiales ni numeros\n"
 #define ALTA_ERROR_SUELDO "\nSueldo invalido, el mismo solo puede contener numeros\n"
 #define ALTA_ERROR_SECTOR "\nSector ingresado es invalido\n"
+
 #define PEDIR_CONFIRMACION "\nEsta seguro que quiere dar de alta a este empleado: (1 para confirmar) "
 #define CONFIRMACION_DENEGADA "Operacion denegada\n\n"
 #define REINTENTOS 2
@@ -180,7 +197,6 @@ void emp_showEmployees (sEmployee* employees, sSector* sectores, int tamSec, int
                 printf("\n\n");
             }
         }
-        system("pause");
     }
 }
 
@@ -238,22 +254,42 @@ int emp_getSector (char* msg, char* msgError,sSector* sectores, int tamSec, int 
 }
 
 
-/*int emp_modificarEmployee (char* msg, char* msgError, sEmployee* employees, int tamEmp, sSector sectores, int tamSec)
+int emp_modificarEmployee (char* primeraOpcion, char* segundaOpcion ,char* pedidoEmpleado ,char* msg, char* msgError, sEmployee* employees, int tamEmp, sSector* sectores, int tamSec, int reiteracion)
 {
     int retorno = FALSE;
-    if (msg != NULL && msgError != NULL && employees != NULL && sectores != NULL && tamEmp > 0 && tamSec > 0)
+    if (primeraOpcion != NULL && segundaOpcion != NULL && pedidoEmpleado != NULL && msg != NULL && msgError != NULL && employees != NULL && sectores != NULL && tamEmp > 0 && tamSec > 0)
     {
+        sEmployee bufferEmployee;
+        int opcion;
         int indice;
         if (getEmployee(employees, tamEmp, sectores, tamSec, &indice, msg, msgError))
         {
-            printf("Que quiere cambiar del empleado:\n");
-            printf("1. nombre\n");
-            printf("2. apellido\n");
-            printf("Su opcion: ");
+            if (menu_modificacion(primeraOpcion, segundaOpcion, msgError, pedidoEmpleado, employees, tamEmp, sectores, tamSec, &opcion))
+            {
+                switch (opcion)
+                {
+                    case 1:
+                        if (getName(MODIFICACION_PEDIR_NOMBRE, "\nNOMBRE INVALIDO\n", sizeof(bufferEmployee.name), 2, bufferEmployee.name))
+                        {
+                            strncpy(employees[indice+1].name, bufferEmployee.name, sizeof(bufferEmployee.name));
+                            retorno = TRUE;
+                        }
+                        break;
+                    case 2:
+                        if (getName(MODIFICACION_PEDIR_APELLIDO, "\nAPELLIDO INVALIDO\n", sizeof(bufferEmployee.lastName), 2, bufferEmployee.lastName))
+                        {
+                            strncpy(employees[indice+1].lastName, bufferEmployee.lastName, sizeof(bufferEmployee.lastName));
+                            retorno = TRUE;
+                        }
+                        break;
+                    default:
+                        printf("%s" ,msgError);
+                }
+            }
         }
     }
     return retorno;
-}*/
+}
 
 
 int isValidID (char* buffer, sEmployee* employees, int tamEmp)
@@ -261,17 +297,91 @@ int isValidID (char* buffer, sEmployee* employees, int tamEmp)
     int retorno = FALSE;
     if (buffer != NULL && employees != NULL && tamEmp > 0)
     {
-        int contadorEmpleados = 0;
+        int flag = FALSE;
+        int max;
         for (int i = 0; i < tamEmp; i++)
         {
             if (employees[i].isEmpty == 0)
             {
-                contadorEmpleados++;
+                if (flag == FALSE)
+                {
+                    max = employees[i].id_employee;
+                    flag = TRUE;
+                }
+                if (max < employees[i].id_employee)
+                {
+                    max = employees[i].id_employee;
+                }
             }
         }
-        if (isValidInt(buffer, 0, contadorEmpleados))
+        if (isValidInt(buffer, 0, max))
         {
             retorno = TRUE;
+        }
+    }
+    return retorno;
+}
+
+
+int getEmployee(sEmployee* employees, int tamEmp, sSector* sectores, int tamSec, int* indice, char* msg, char* msgError)
+{
+    int retorno = FALSE;
+    if (employees != NULL && tamEmp > 0 && sectores != NULL && tamSec > 0 && indice != NULL && msg != NULL && msgError != NULL)
+    {
+        char buffer[5];
+        emp_showEmployees(employees, sectores, tamSec, tamEmp);
+        if (getString(msg, buffer, sizeof(buffer)) && isValidID(buffer, employees, tamEmp))
+        {
+            *indice = atoi(buffer);
+            retorno = TRUE;
+        } else
+        {
+            printf(msgError);
+        }
+    }
+    return retorno;
+}
+
+
+int menu_modificacion (char* primeraOpcion, char* segundaOpcion , char* msgError,char* pedido ,sEmployee* employees, int tamEmp, sSector* sectores, int tamSec, int* opcion)
+{
+    int retorno = TRUE;
+    if (primeraOpcion != NULL && segundaOpcion != NULL && pedido != NULL && employees != NULL && tamEmp > 0 && sectores != NULL && tamSec > 0 && opcion != NULL)
+    {
+        char buffer[3];
+        printf("%s", primeraOpcion);
+        printf("%s", segundaOpcion);
+        if (getString(pedido, buffer, sizeof(buffer)))
+        {
+            printf("%s", buffer);
+            *opcion = atoi(buffer);
+            retorno = TRUE;
+        }
+    }
+    return retorno;
+}
+
+
+int emp_bajaEmpleado (char* msg, char* msgError, sEmployee* employees, int tamEmp, sSector* sectores, int tamSec)
+{
+    int retorno = FALSE;
+    if (msg != NULL && msgError != NULL && employees != NULL && tamEmp > 0 && sectores != NULL && tamSec > 0)
+    {
+        char buffer[2];
+        emp_showEmployees(employees, sectores, tamSec, tamEmp);
+        if (getString(msg, buffer, sizeof(buffer)) && isValidID(buffer, employees, tamEmp))
+        {
+            if (employees[atoi(buffer)+1].isEmpty == FALSE)
+            {
+                employees[atoi(buffer)+1].isEmpty = TRUE;
+                retorno = TRUE;
+            } else
+            {
+                printf("%s",msgError);
+            }
+        } else
+        {
+            printf("%s",msgError);
         }
     }
     return retorno;

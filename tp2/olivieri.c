@@ -189,18 +189,4 @@ int  getConfirmacion(char* msg, char* msgError)
 }
 
 
-int getEmployee(sEmployee* employees, int tamEmp, sSector* sectores, int tamSec, int* indice, char* msg, char* msgError)
-{
-    int retorno = FALSE;
-    if (employees != NULL && tamEmp > 0 && sectores != NULL && tamSec > 0 && indice != NULL && msg != NULL && msgError != NULL)
-    {
-        char buffer[5];
-        emp_showEmployees(employees, sectores, tamSec, tamEmp);
-        if (getString(msg, buffer, sizeof(buffer)) && isValidID(buffer, employees, tamEmp))
-        {
-            *indice = atoi(buffer);
-            retorno = TRUE;
-        } printf(msgError);
-    }
-    return retorno;
-}
+

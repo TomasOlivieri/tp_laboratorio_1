@@ -67,7 +67,6 @@ int isValidName (char* buffer)
         {
             if(!(tolower(buffer[i]) >= 'a' && tolower(buffer[i]) <= 'z'))
             {
-                printf("prubea dio mal en el digito %d\n", i);
                 retorno = FALSE;
                 break;
             }

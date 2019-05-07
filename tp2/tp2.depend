@@ -42,3 +42,43 @@
 1556935155 c:\users\prudan\desktop\tp2\sector.h
 	"employee.h"
 
+1557186665 source:c:\users\prudan\desktop\los tp prog\tp2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
+1557183007 c:\users\prudan\desktop\los tp prog\tp2\olivieri.h
+
+1557080387 c:\users\prudan\desktop\los tp prog\tp2\validacion.h
+
+1557186502 c:\users\prudan\desktop\los tp prog\tp2\employee.h
+
+1557185254 source:c:\users\prudan\desktop\los tp prog\tp2\validacion.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
+1557184709 source:c:\users\prudan\desktop\los tp prog\tp2\olivieri.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
+1557186763 source:c:\users\prudan\desktop\los tp prog\tp2\employee.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
