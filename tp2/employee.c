@@ -6,29 +6,18 @@
 #include "employee.h"
 
 
-#define BAJA_PEDIR "Ingrese el id del empleado que quiera dar de baja: "
-#define BAJA_ERROR "ID invalido o no encontrado\n"
-#define MODIFICACION_PRIMERO "1. Modificar el nombre\n"
-#define MODIFICACION_SEGUNDO "2. Modificar el apellido\n"
-#define MODIFICACION_INGRESE_EMPLEADO "Ingrese el empleado que quiera modificar: "
-#define MODIFICACION_ERROR_LEGAJO "Legajo invalido\n"
-#define MODIFICACION_ELEGIR_EMPLEADO "Elija un empleado para modificar: "
-#define MODIFICACION_PEDIR_NOMBRE "Ingrese el nuevo nombre: "
-#define MODIFICACION_PEDIR_APELLIDO "Ingrese el nuevo apellido: "
-#define ALTA_EXITOSA "\n\nCarga de empleado exitosa\n\n"
-#define ALTA_NO_EXITOSA "\n\nUsted no ha podido ingresar un nuevo empleado\n\n"
-#define MODIFICACION_EXITOSA "Usted modifico un empleado con exito\n"
-#define MODIFICACION_NO_EXITOSA "Usted no ha podido modificar a un empleado\n"
-#define BAJA_EXITOSA "Usted dio de baja a un empleado con exito\n"
-#define BAJA_NO_EXITOSA "Usted no ha podido dar de baja a un empleado\n"
-#define ALTA_PEDIR_NOMBRE "Ingrese un nombre: "
-#define ALTA_PEDIR_APELLIDO "Ingrese un apellido: "
+#define ALTA_PEDIR_NOMBRE "Ingrese el nombre del empleado: "
+#define ALTA_ERROR_NOMBRE "El nombre no puede contener caracteres especiales ni numeros\n"
+#define ALTA_PEDIR_APELLIDO "Ingrese el apellido del empleado: "
+#define ALTA_ERROR_APELLIDO "El apellido no puede contener caracteres especiales ni numeros\n"
 #define ALTA_PEDIR_SUELDO "Ingrese el sueldo del empleado: "
+#define ALTA_ERROR_SUELDO "El sueldo no puede contener letras ni caracteres especiales"
 #define ALTA_PEDIR_SECTOR "Ingrese el sector del empleado: "
-#define ALTA_ERROR_NOMBRE "\nNombre invalido, no puede contener caracteres especiales ni numeros\n"
-#define ALTA_ERROR_APELLIDO "\nApellido invalido, no puede contener caracteres especiales ni numeros\n"
-#define ALTA_ERROR_SUELDO "\nSueldo invalido, el mismo solo puede contener numeros\n"
-#define ALTA_ERROR_SECTOR "\nSector ingresado es invalido\n"
+#define ALTA_ERROR_SECTOR "Sector invalido\n"
+
+
+
+
 
 #define PEDIR_CONFIRMACION "\nEsta seguro que quiere dar de alta a este empleado: (1 para confirmar) "
 #define CONFIRMACION_DENEGADA "Operacion denegada\n\n"
@@ -254,7 +243,8 @@ int emp_getSector (char* msg, char* msgError,sSector* sectores, int tamSec, int 
 }
 
 
-int emp_modificarEmployee (char* primeraOpcion, char* segundaOpcion ,char* pedidoEmpleado ,char* msg, char* msgError, sEmployee* employees, int tamEmp, sSector* sectores, int tamSec, int reiteracion)
+int emp_modificarEmployee (char* primeraOpcion, char* segundaOpcion ,char* pedidoEmpleado ,char* msg, char* msgError, sEmployee* employees,
+                           int tamEmp, sSector* sectores, int tamSec, int reiteracion, char* msgNombre, char* msgNombreError, char* msgApellido, char* msgApellidoError)
 {
     int retorno = FALSE;
     if (primeraOpcion != NULL && segundaOpcion != NULL && pedidoEmpleado != NULL && msg != NULL && msgError != NULL && employees != NULL && sectores != NULL && tamEmp > 0 && tamSec > 0)
@@ -269,14 +259,14 @@ int emp_modificarEmployee (char* primeraOpcion, char* segundaOpcion ,char* pedid
                 switch (opcion)
                 {
                     case 1:
-                        if (getName(MODIFICACION_PEDIR_NOMBRE, "\nNOMBRE INVALIDO\n", sizeof(bufferEmployee.name), 2, bufferEmployee.name))
+                        if (getName(msgNombre, msgError, sizeof(bufferEmployee.name), 2, bufferEmployee.name))
                         {
                             strncpy(employees[indice+1].name, bufferEmployee.name, sizeof(bufferEmployee.name));
                             retorno = TRUE;
                         }
                         break;
                     case 2:
-                        if (getName(MODIFICACION_PEDIR_APELLIDO, "\nAPELLIDO INVALIDO\n", sizeof(bufferEmployee.lastName), 2, bufferEmployee.lastName))
+                        if (getName(msgApellido, msgApellidoError, sizeof(bufferEmployee.lastName), 2, bufferEmployee.lastName))
                         {
                             strncpy(employees[indice+1].lastName, bufferEmployee.lastName, sizeof(bufferEmployee.lastName));
                             retorno = TRUE;
@@ -378,6 +368,93 @@ int emp_bajaEmpleado (char* msg, char* msgError, sEmployee* employees, int tamEm
             } else
             {
                 printf("%s",msgError);
+            }
+        } else
+        {
+            printf("%s",msgError);
+        }
+    }
+    return retorno;
+}
+
+
+void emp_burbujeoNombre (sEmployee* employee, int tamEmp)
+{
+    int flag;
+    do
+    {
+        flag = TRUE;
+        for (int i = 0; i < tamEmp - 1; i++)
+        {
+            if(strcmp(employee[i].name, employee[i+1].name))
+            {
+                emp_swap(&employee[i], &employee[i+1]);
+                flag = FALSE;
+            } else if (strcmp(employee[i].name, employee[i+1].name) == FALSE && employee[i].sector > employee[i].sector)
+            {
+                emp_swap(&employee[i], &employee[i+1]);
+                flag = FALSE;
+            }
+        }
+    }while (flag);
+}
+
+
+void emp_swap (sEmployee* pa, sEmployee* pb)
+{
+    sEmployee buffer;
+    buffer = *pa;
+    *pa = *pb;
+    *pb = buffer;
+}
+
+
+
+void emp_burbujeoPromedio (sEmployee* employee, int tamEmp, sSector* sectores, int tamSec)
+{
+    float promedio = 0;
+    for (int i = 0; i < tamEmp; i++)
+    {
+        if (employee[i].isEmpty == FALSE)
+        {
+            promedio = promedio + employee[i].salary;
+        }
+    }
+
+    for (int i = 0; i < tamEmp; i++)
+    {
+        if (promedio < employee[i].salary && employee[i].isEmpty == FALSE)
+        {
+            emp_showEmployee(employee[i], sectores, tamSec);
+        }
+    }
+
+}
+
+
+int emp_listado (char* primeraOpcion, char* segundaOpcion, char* msg, char* msgError, sEmployee* employees, int tamEmp, sSector* sectores, int tamSec)
+{
+    int retorno = FALSE;
+    if (primeraOpcion != NULL && segundaOpcion != NULL && msg != NULL && msgError != NULL && employees != NULL && tamEmp > 0 && sectores != NULL && tamSec > 0)
+    {
+        char buffer[2];
+        printf("%s", primeraOpcion);
+        printf("%s", segundaOpcion);
+        if (getString(msg, buffer, sizeof(buffer)))
+        {
+            switch (atoi(buffer))
+            {
+                case 1:
+                    emp_burbujeoNombre(employees, tamEmp);
+                    emp_showEmployees(employees, sectores, tamEmp, tamSec);
+                    retorno = TRUE;
+                    break;
+                case 2:
+                    emp_burbujeoPromedio(employees, tamEmp, sectores, tamSec);
+                    retorno = TRUE;
+                    break;
+                default:
+                    printf("%s",msgError);
             }
         } else
         {

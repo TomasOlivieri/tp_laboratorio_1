@@ -18,7 +18,7 @@
 
 
 
-void burbujeo(int* aInt, int tam)
+void burbujeoInt(int* aInt, int tam)
 {
     int flag;
     do
@@ -28,15 +28,24 @@ void burbujeo(int* aInt, int tam)
         {
             if(aInt[i] > aInt[i + 1])
             {
-                swap(&aInt[i], &aInt[i + 1]);
+                swapInt(&aInt[i], &aInt[i + 1]);
                 flag = FALSE;
             }
         }
     }while (flag);
 }
 
+void swapChar(char* pa, char* pb)
+{
+    char buffer[51];
+    strcpy(buffer, pa);
+    strcpy(pa, pb);
+    strcpy(pb, buffer);
+}
 
-void swap (int* pa, int* pb)
+
+
+void swapInt(int* pa, int* pb)
 {
     int aux;
     aux = *pa;
@@ -187,6 +196,8 @@ int  getConfirmacion(char* msg, char* msgError)
     }
     return retorno;
 }
+
+
 
 
 

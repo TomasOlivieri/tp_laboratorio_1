@@ -1,5 +1,3 @@
-
-
 int isValidInt(char* buffer, int min, int max);
 int isValidFloat(char* buffer);
 int isValidName (char* buffer);
