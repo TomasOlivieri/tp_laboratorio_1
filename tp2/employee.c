@@ -109,14 +109,14 @@ void emp_hardcode (sEmployee* employee, int tam)
 {
     sEmployee bufferEmployee[5] =
     {
-        {1, "Tomas", "Olivieri", 15000.00, 1, 0},
+        {1, "Tomas", "Olivieri", 5000.00, 1, 0},
         {2, "Seba", "Olivieri", 20000.00, 1, 0},
-        {3, "Lucas", "Olivieri", 15000.00, 1, 0},
+        {3, "Lucas", "Olivieri", 25000.00, 1, 0},
         {4, "Gustavo", "Olivieri", 15000.00, 1, 0},
-        {5, "Pablo", "Olivieri", 15000.00, 1, 0},
+        {5, "Pablo", "Olivieri", 50000.00, 1, 0},
     };
 
-    for (int i = 0; i <=5 ; i++)
+    for (int i = 0; i < 5 ; i++)
     {
         employee[i] = bufferEmployee[i];
     }
@@ -390,7 +390,7 @@ void emp_burbujeoNombre (sEmployee* employee, int tamEmp)
             {
                 emp_swap(&employee[i], &employee[i+1]);
                 flag = FALSE;
-            } else if (strcmp(employee[i].name, employee[i+1].name) == FALSE && employee[i].sector > employee[i].sector)
+            } else if (strcmp(employee[i].name, employee[i+1].name) == FALSE && employee[i].sector > employee[i+1].sector)
             {
                 emp_swap(&employee[i], &employee[i+1]);
                 flag = FALSE;
@@ -412,20 +412,25 @@ void emp_swap (sEmployee* pa, sEmployee* pb)
 
 void emp_burbujeoPromedio (sEmployee* employee, int tamEmp, sSector* sectores, int tamSec)
 {
+    int cont = 0;
+    float acum = 0;
     float promedio = 0;
     for (int i = 0; i < tamEmp; i++)
     {
         if (employee[i].isEmpty == FALSE)
         {
-            promedio = promedio + employee[i].salary;
+            acum = acum + employee[i].salary;
+            cont++;
         }
     }
 
+    promedio = acum / cont;
     for (int i = 0; i < tamEmp; i++)
     {
         if (promedio < employee[i].salary && employee[i].isEmpty == FALSE)
         {
             emp_showEmployee(employee[i], sectores, tamSec);
+            printf("\n\n");
         }
     }
 
