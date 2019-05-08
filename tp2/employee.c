@@ -357,13 +357,15 @@ int emp_bajaEmpleado (char* msg, char* msgError, sEmployee* employees, int tamEm
     int retorno = FALSE;
     if (msg != NULL && msgError != NULL && employees != NULL && tamEmp > 0 && sectores != NULL && tamSec > 0)
     {
+        int indice;
         char buffer[2];
         emp_showEmployees(employees, sectores, tamSec, tamEmp);
         if (getString(msg, buffer, sizeof(buffer)) && isValidID(buffer, employees, tamEmp))
         {
-            if (employees[atoi(buffer)+1].isEmpty == FALSE)
+            indice = atoi(buffer);
+            if (employees[indice - 1].isEmpty == FALSE)
             {
-                employees[atoi(buffer)+1].isEmpty = TRUE;
+                employees[indice - 1].isEmpty = TRUE;
                 retorno = TRUE;
             } else
             {
