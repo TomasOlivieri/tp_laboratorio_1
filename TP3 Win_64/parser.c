@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "LinkedList.h"
 #include "Employee.h"
+
+
+
 
 #define TRUE 1
 #define FALSE 0
@@ -14,28 +18,18 @@
  * \return int
  *
  */
-int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
+int parser_EmployeeFromText(FILE* pFile ,LinkedList* pArrayListEmployee)
 {
     char bufferId[TAM_BUFFER];
     char bufferNombre[TAM_BUFFER];
     char bufferHorasTrabajadas[TAM_BUFFER];
     char bufferSueldo[TAM_BUFFER];
     int retorno = FALSE;
-    int flagInit = TRUE;
     Employee* pEmpleado;
     if(pFile != NULL)
     {
         while(!feof(pFile))
         {
-            if(flagInit)
-            {
-                flagInit = FALSE;
-                fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",
-                                                        bufferId,
-                                                        bufferNombre,
-                                                        bufferHorasTrabajadas,
-                                                        bufferSueldo);
-            }
             fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",
                                                     bufferId,
                                                     bufferNombre,
@@ -50,6 +44,9 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
             {
                 ll_add(pArrayListEmployee, pEmpleado);
                 retorno = TRUE;
+            } else
+            {
+                printf("%s\n%s\n\n",bufferId, bufferNombre);
             }
         }
     }
@@ -65,6 +62,29 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
  */
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
-
-    return 1;
+    int retorno = FALSE;
+    Employee* pEmpleado;
+    int bufferId;
+    char bufferNombre[128];
+    int bufferHorasTrabajadas;
+    int bufferSueldo;
+    if(pFile!=NULL)
+    {
+        while(!feof(pFile))
+        {
+            pEmpleado = employee_new();
+            fread(pEmpleado,sizeof(Employee),1,pFile);
+            employee_getId(pEmpleado,&bufferId);
+            employee_getNombre(pEmpleado,bufferNombre);
+            employee_getHorasTrabajadas(pEmpleado,&bufferHorasTrabajadas);
+            employee_getSueldo(pEmpleado,&bufferSueldo);
+            if( bufferId >= 0 && strlen(bufferNombre) > 0 &&
+                bufferHorasTrabajadas > 0 && bufferSueldo > 0)
+            {
+                ll_add(pArrayListEmployee, pEmpleado);
+                retorno = TRUE;
+            }
+        }
+    }
+    return retorno;
 }

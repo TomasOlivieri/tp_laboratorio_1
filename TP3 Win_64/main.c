@@ -15,11 +15,15 @@
 #define OPCION_5 "5. Baja de empleado"
 #define OPCION_6 "6. Listar empleados"
 #define OPCION_7 "7. Ordenar empleados"
-#define OPCION_8 "8. Guardar los datos de los empleados en el archivo data.csv (modo texto)."
-#define OPCION_9 "9. Guardar los datos de los empleados en el archivo data.csv (modo binario)."
+#define OPCION_8 "8. Guardar los datos en el archivo data.csv (modo texto)."
+#define OPCION_9 "9. Guardar los datos en el archivo data.csv (modo binario)."
 #define OPCION_10 "10. Salir"
 #define OPCION_MENSAJE "Su opcion: "
 #define OPCION_ERROR "Opcion invalida"
+
+
+#define FALSE 0
+#define TRUE 1
 
 /****************************************************
     Menu:
@@ -39,6 +43,8 @@
 int main()
 {
     int option = 0;
+    int proxId;
+    int flagProxId = TRUE;
     LinkedList* listaEmpleados = ll_newLinkedList();
     do{
         menu(OPCION_MENSAJE, BIENVENIDA, OPCION_1, OPCION_2, OPCION_3, OPCION_4,
@@ -47,8 +53,13 @@ int main()
         {
             case 1:
                 controller_loadFromText("data.csv",listaEmpleados);
+                proxId = ll_len(listaEmpleados);
+                printf("%d", proxId);
                 break;
             case 2:
+                controller_loadFromBinary("data.bin", listaEmpleados);
+                proxId = ll_len(listaEmpleados);
+                printf("%d", proxId);
                 break;
             case 3:
                 break;
@@ -69,6 +80,7 @@ int main()
             default:
                 printf("%s\n", OPCION_ERROR);
         }
+        system("pause");
     }while(option != 10);
     return 0;
 }

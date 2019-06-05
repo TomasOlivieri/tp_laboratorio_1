@@ -242,6 +242,7 @@ void menu(char* msg, char* msgBienvenida, char* opcion1, char* opcion2, char* op
         opcion4 != NULL && opcion5 != NULL && opcion6 != NULL && opcion7 != NULL &&
         opcion8 != NULL && opcion9 != NULL && opcion10 != NULL && opcion != NULL)
     {
+        system("cls");
         printf("%s", msgBienvenida);
         printf("\t%s\n", opcion1);
         printf("\t%s\n", opcion2);
