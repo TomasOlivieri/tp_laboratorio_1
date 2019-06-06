@@ -13,12 +13,12 @@
  * \param pArrayListEmployee LinkedList*
  * \return int
  */
-int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
+int controller_loadFromText(char* path ,LinkedList* pArrayListEmployee, int* proxId)
 {
     int retorno = FALSE;
     FILE* pFile = NULL;
     pFile = fopen(path,"r");
-    if(parser_EmployeeFromText(pFile,pArrayListEmployee))
+    if(parser_EmployeeFromText(pFile, pArrayListEmployee, proxId))
     {
         printf("\nArchivo cargado\n");
         retorno = TRUE;
@@ -34,12 +34,12 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
  * \return int
  *
  */
-int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
+int controller_loadFromBinary(char* path, LinkedList* pArrayListEmployee, int* proxId)
 {
     int retorno = FALSE;
     FILE* pFile;
     pFile = fopen(path,"rb");
-    if(!parser_EmployeeFromBinary(pFile,pArrayListEmployee))
+    if(!parser_EmployeeFromBinary(pFile, pArrayListEmployee, proxId))
     {
         printf("\nArchivo cargado\n");
         retorno = TRUE;
@@ -117,7 +117,16 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
 {
-    return 1;
+    int retorno = FALSE;
+    FILE* pFile;
+    pFile = fopen(path,"w");
+    if(!parser_saveAsText(pFile,pArrayListEmployee))
+    {
+        printf("\nArchivo guardado");
+        retorno = TRUE;
+    }
+    fclose(pFile);
+    return retorno;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo binario).
@@ -129,6 +138,15 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
-    return 1;
+    int retorno = FALSE;
+    FILE* pFile;
+    pFile = fopen(path,"wb");
+    if(!parser_saveAsBinary(pFile,pArrayListEmployee))
+    {
+        printf("\nArchivo guardado");
+        retorno = TRUE;
+    }
+    fclose(pFile);
+    return retorno;
 }
 

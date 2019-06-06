@@ -44,43 +44,44 @@ int main()
 {
     int option = 0;
     int proxId;
-    int flagProxId = TRUE;
     LinkedList* listaEmpleados = ll_newLinkedList();
-    do{
+    do
+    {
         menu(OPCION_MENSAJE, BIENVENIDA, OPCION_1, OPCION_2, OPCION_3, OPCION_4,
              OPCION_5, OPCION_6, OPCION_7, OPCION_8, OPCION_9, OPCION_10, &option);
         switch(option)
         {
-            case 1:
-                controller_loadFromText("data.csv",listaEmpleados);
-                proxId = ll_len(listaEmpleados);
-                printf("%d", proxId);
-                break;
-            case 2:
-                controller_loadFromBinary("data.bin", listaEmpleados);
-                proxId = ll_len(listaEmpleados);
-                printf("%d", proxId);
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            case 10:
-                break;
-            default:
-                printf("%s\n", OPCION_ERROR);
+        case 1:
+            controller_loadFromText("data.csv", listaEmpleados, &proxId);
+            printf("%d\n\n", proxId);
+            break;
+        case 2:
+            controller_loadFromBinary("data.bin", listaEmpleados, &proxId);
+            printf("%d\n\n", proxId);
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 5:
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        case 8:
+            controller_saveAsText("data.csv", listaEmpleados);
+            break;
+        case 9:
+            controller_saveAsBinary("data.bin", listaEmpleados);
+            break;
+        case 10:
+            break;
+        default:
+            printf("%s\n", OPCION_ERROR);
         }
         system("pause");
-    }while(option != 10);
+    }
+    while(option != 10);
     return 0;
 }
