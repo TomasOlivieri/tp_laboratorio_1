@@ -19,6 +19,7 @@
 #define FALSE 0
 #define TRUE 1
 #define REINTENTOS 2
+#define TAM_BUFFER 300
 
 
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto)
@@ -70,9 +71,10 @@ int controller_loadFromBinary(char* path, LinkedList* pArrayListEmployee, int* p
  */
 int controller_addEmployee(LinkedList* pArrayListEmployee, int* proxId)
 {
-    char confirmacion;
     int retorno = FALSE;
+    char confirmacion;
     Employee bufferEmployee;
+    Employee* newEmpleado = NULL;
     if (getName(ALTA_NOMBRE, ALTA_NOMBRE_ERROR, sizeof(bufferEmployee.nombre),
                 REINTENTOS, bufferEmployee.nombre))
     {
@@ -87,7 +89,11 @@ int controller_addEmployee(LinkedList* pArrayListEmployee, int* proxId)
                 if (getString(ALTA_CONFIRMACION, &confirmacion, sizeof(confirmacion)) &&
                              (confirmacion == 's' || confirmacion == 'S'))
                 {
-                    ll_add(pArrayListEmployee, &bufferEmployee);
+                    newEmpleado = employee_newParametros(bufferEmployee.id, bufferEmployee.nombre,
+                                                         bufferEmployee.horasTrabajadas, bufferEmployee.sueldo);
+
+                    ll_add(pArrayListEmployee, newEmpleado);
+                    autoincremental(proxId);
                     retorno = TRUE;
                 }
             }
@@ -156,7 +162,7 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
     int retorno = FALSE;
     FILE* pFile;
     pFile = fopen(path,"w");
-    if(!parser_saveAsText(pFile,pArrayListEmployee))
+    if(parser_saveAsText(pFile,pArrayListEmployee))
     {
         printf("\nArchivo guardado");
         retorno = TRUE;
@@ -177,7 +183,7 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     int retorno = FALSE;
     FILE* pFile;
     pFile = fopen(path,"wb");
-    if(!parser_saveAsBinary(pFile,pArrayListEmployee))
+    if(parser_saveAsBinary(pFile,pArrayListEmployee))
     {
         printf("\nArchivo guardado");
         retorno = TRUE;

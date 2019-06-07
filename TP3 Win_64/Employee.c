@@ -17,6 +17,8 @@ Employee* employee_new()
     return (Employee*) malloc(sizeof(Employee));
 }
 
+
+
 /** \brief CREA UN NUEVO EMPLEADO YA CON PARAMETROS CARGADOS
  * \param char* idStr EL ID
  * \param char* nombreStr EL NOMBRE
@@ -24,7 +26,7 @@ Employee* employee_new()
  * \param char* sueldoStr EL SUELDO
  * \return 0 SI ALGO SALIO MAL, 11 SI ESTA TODO BIEN
  */
-Employee* employee_newParametros(char* idStr,char* nombreStr,
+Employee* employee_newParametrosStr(char* idStr,char* nombreStr,
                                  char* horasTrabajadasStr, char* sueldoStr)
 {
     Employee* emp = NULL;
@@ -44,6 +46,27 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,
     }
     return retorno;
 }
+
+Employee* employee_newParametros(int id,char* nombre,
+                                 int horasTrabajadas, int sueldo)
+{
+    Employee* retorno = NULL;
+    Employee* emp = NULL;
+    if (id > 0 && nombre != NULL && horasTrabajadas > 0 && sueldo)
+    {
+        emp = employee_new();
+        if (employee_setId(emp, id) && employee_setNombre(emp, nombre) &&
+            employee_setHorasTrabajadas(emp, horasTrabajadas) && employee_setSueldo(emp, sueldo))
+        {
+            retorno = emp;
+        } else
+        {
+            employee_delete(emp);
+        }
+    }
+    return retorno;
+}
+
 
 /** \brief ELIMINA UN EMPLEADO
  * \param this Employee* EL EMPLEADO A ELIMINAR

@@ -48,10 +48,10 @@ int parser_EmployeeFromText(FILE* pFile, LinkedList* pArrayListEmployee, int* pr
                                                 bufferHorasTrabajadas,
                                                 bufferSueldo);
 
-            pEmpleado = employee_newParametros(bufferId,
-                                               bufferNombre,
-                                               bufferHorasTrabajadas,
-                                               bufferSueldo);
+            pEmpleado = employee_newParametrosStr(bufferId,
+                                                  bufferNombre,
+                                                  bufferHorasTrabajadas,
+                                                  bufferSueldo);
 
             if(pEmpleado != NULL)
             {
@@ -136,12 +136,12 @@ int parser_EmployeeFromBinary(FILE* pFile, LinkedList* pArrayListEmployee, int* 
  */
 int parser_saveAsText(FILE* pFile , LinkedList* pArrayListEmployee)
 {
-    int retorno = FALSE;
     Employee* pEmpleado;
+    int retorno = FALSE;
     int bufferId;
-    char bufferNombre[TAM_BUFFER];
     int bufferHorasTrabajadas;
     int bufferSueldo;
+    char bufferNombre[TAM_BUFFER];
     if(pFile != NULL)
     {
         fprintf(pFile,"id,nombre,horasTrabajadas,sueldo\n");
@@ -158,7 +158,7 @@ int parser_saveAsText(FILE* pFile , LinkedList* pArrayListEmployee)
                 fprintf(pFile,"%d,%s,%d,%d\n",  bufferId,bufferNombre,
                                                 bufferHorasTrabajadas,
                                                 bufferSueldo);
-                retorno = FALSE;
+                retorno = TRUE;
             }
         }
     }
