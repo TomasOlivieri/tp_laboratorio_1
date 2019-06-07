@@ -188,7 +188,7 @@ int getTitulo (char* msg, char* msgError, int caracteres, int reintentos, char* 
 int getMail (char* msg, char* msgError, int caracteres, int reintentos, char* mail)
 {
     int retorno = FALSE;
-    if (msg != NULL && msgError != NULL && caracteres > 0 && reintentos > 0 && mail != 0)
+    if (msg != NULL && msgError != NULL && caracteres > 0 && reintentos > 0 && mail != NULL)
     {
         char buffer[caracteres*3];
         do
@@ -205,6 +205,25 @@ int getMail (char* msg, char* msgError, int caracteres, int reintentos, char* ma
     return retorno;
 }
 
+int getNumero (char* msg, char* msgError, int caracteres, int reintentos, int* numero)
+{
+    int retorno = FALSE;
+    if (msg != NULL && msgError != NULL && caracteres > 0 && reintentos > 0 && numero != NULL)
+    {
+        char buffer[caracteres*3];
+        do
+        {
+            if (getString(msg, buffer, caracteres) == TRUE && isValidId(buffer) == TRUE)
+            {
+                *numero = atoi(buffer);
+                retorno = TRUE;
+                break;
+            }
+            printf(msgError);
+        } while (reintentos--);
+    }
+    return retorno;
+}
 
 int getFecha (char* msgDia, char* msgMes, char* msgAnio, char* msgError, int reintentos, int* dia, int* mes, int* anio)
 {

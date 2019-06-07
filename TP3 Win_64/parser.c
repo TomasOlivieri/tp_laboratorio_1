@@ -18,29 +18,41 @@
  */
 int parser_EmployeeFromText(FILE* pFile, LinkedList* pArrayListEmployee, int* proxId)
 {
+    Employee* pEmpleado;
     Employee* buscarMaximo = NULL;
     char bufferId[TAM_BUFFER];
     char bufferNombre[TAM_BUFFER];
     char bufferHorasTrabajadas[TAM_BUFFER];
     char bufferSueldo[TAM_BUFFER];
     int bufferMax;
+    int flagPrimero = TRUE;
     int flagMax = TRUE;
     int retorno = FALSE;
-    Employee* pEmpleado;
     if(pFile != NULL)
     {
         while(!feof(pFile))
         {
-            fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",
+            if (flagPrimero)
+            {
+                fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",
                                                     bufferId,
                                                     bufferNombre,
                                                     bufferHorasTrabajadas,
                                                     bufferSueldo);
+                flagPrimero = FALSE;
+            }
 
-            pEmpleado = employee_newParametros( bufferId,
+            fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",
+                                                bufferId,
                                                 bufferNombre,
                                                 bufferHorasTrabajadas,
                                                 bufferSueldo);
+
+            pEmpleado = employee_newParametros(bufferId,
+                                               bufferNombre,
+                                               bufferHorasTrabajadas,
+                                               bufferSueldo);
+
             if(pEmpleado != NULL)
             {
                 ll_add(pArrayListEmployee, pEmpleado);

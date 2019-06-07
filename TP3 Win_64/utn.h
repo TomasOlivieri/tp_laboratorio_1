@@ -8,6 +8,7 @@ int getTelefono (char* msg, char* msgError, int caracteres, int reintentos, char
 int getSexo (char* msg, char* msgError, int caracteres, int reintentos, char* sexo);
 int getTitulo (char* msg, char* msgError, int caracteres, int reintentos, char* texto);
 int getMail (char* msg, char* msgError, int caracteres, int reintentos, char* mail);
+int getNumero (char* msg, char* msgError, int caracteres, int reintentos, int* numero);
 
 void menu(char* msg, char* msgBienvenida, char* opcion1, char* opcion2, char* opcion3, char* opcion4,
           char* opcion5, char* opcion6, char* opcion7, char* opcion8, char* opcion9,

@@ -22,6 +22,16 @@
 #define OPCION_ERROR "Opcion invalida"
 
 
+#define ALTA_EXITOSA "Alta exitosa\n\n"
+#define ALTA_NO_EXITOSA "Usted no pudo realizar el alta\n\n"
+
+
+#define ERROR_CARGA_DOBLE "Usted ya cargo el archivo\n\n"
+#define ERROR_GUARDADO_MODO_BINARIO "Usted cargo el archivo en modo texto\nNo lo puede guardar en modo binario!\n\n"
+#define ERROR_GUARDADO_MODO_TEXTO "Usted cargo el archivo en modo binario\nNo lo puede guardar en modo texto!\n\n"
+#define ERROR_ALTA_NO_CARGA "Antes de realizar una alta, primero haga una carga del archivo\n\n"
+
+#define FINAL_PROGRAMA "Programa cerrado correctamente\n\n"
 #define FALSE 0
 #define TRUE 1
 
@@ -43,7 +53,11 @@
 int main()
 {
     int option = 0;
-    int proxId;
+    int proxId = 0;
+
+    int flagCargar = TRUE;
+    int flagBinario = FALSE;
+    int flagTexto = FALSE;
     LinkedList* listaEmpleados = ll_newLinkedList();
     do
     {
@@ -52,14 +66,43 @@ int main()
         switch(option)
         {
         case 1:
-            controller_loadFromText("data.csv", listaEmpleados, &proxId);
-            printf("%d\n\n", proxId);
+            if (flagCargar)
+            {
+                controller_loadFromText("data.csv", listaEmpleados, &proxId);
+                proxId++;
+                flagCargar = FALSE;
+                flagTexto = TRUE;
+            } else
+            {
+                printf("%s", ERROR_CARGA_DOBLE);
+            }
             break;
         case 2:
-            controller_loadFromBinary("data.bin", listaEmpleados, &proxId);
-            printf("%d\n\n", proxId);
+            if (flagCargar)
+            {
+                controller_loadFromBinary("data.bin", listaEmpleados, &proxId);
+                proxId++;
+                flagCargar = FALSE;
+                flagBinario = TRUE;
+            } else
+            {
+                printf("s", ERROR_CARGA_DOBLE);
+            }
             break;
         case 3:
+            if (!flagCargar)
+            {
+                if (controller_addEmployee(listaEmpleados, &proxId))
+                {
+                    printf("%s", ALTA_EXITOSA);
+                } else
+                {
+                    printf("%s", ALTA_NO_EXITOSA);
+                }
+            } else
+            {
+                printf("%s", ERROR_ALTA_NO_CARGA);
+            }
             break;
         case 4:
             break;
@@ -70,12 +113,25 @@ int main()
         case 7:
             break;
         case 8:
-            controller_saveAsText("data.csv", listaEmpleados);
+            if (flagTexto)
+            {
+                controller_saveAsText("data.csv", listaEmpleados);
+            } else
+            {
+                printf("%s", ERROR_GUARDADO_MODO_TEXTO);
+            }
             break;
         case 9:
-            controller_saveAsBinary("data.bin", listaEmpleados);
+            if (flagBinario)
+            {
+                controller_saveAsBinary("data.bin", listaEmpleados);
+            } else
+            {
+                printf("%s", ERROR_GUARDADO_MODO_BINARIO);
+            }
             break;
         case 10:
+            printf("%s", FINAL_PROGRAMA);
             break;
         default:
             printf("%s\n", OPCION_ERROR);

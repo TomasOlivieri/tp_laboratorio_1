@@ -3,9 +3,22 @@
 #include "LinkedList.h"
 #include "Employee.h"
 #include "parser.h"
+#include "utn.h"
+
+
+#define ALTA_NOMBRE "Ingrese el nombre del empleado: "
+#define ALTA_HORAS "Ingrese las horas trabajadas por el empleado: "
+#define ALTA_SUELDO "Ingrese el sueldo del empleado: "
+
+#define ALTA_NOMBRE_ERROR "El nombre no puede contener numeros, espacios ni caracteres especiales\n\n"
+#define ALTA_HORAS_ERROR "La cantidad de horas solo puede contener numero\n\n"
+#define ALTA_SUELDO_ERROR "El sueldo solo puede contener numero\n\n"
+
+#define ALTA_CONFIRMACION "Esta seguro que quiere hacer la alta de este empleado: (Confirmar= 's')"
 
 #define FALSE 0
 #define TRUE 1
+#define REINTENTOS 2
 
 
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto)
@@ -39,7 +52,7 @@ int controller_loadFromBinary(char* path, LinkedList* pArrayListEmployee, int* p
     int retorno = FALSE;
     FILE* pFile;
     pFile = fopen(path,"rb");
-    if(!parser_EmployeeFromBinary(pFile, pArrayListEmployee, proxId))
+    if(parser_EmployeeFromBinary(pFile, pArrayListEmployee, proxId))
     {
         printf("\nArchivo cargado\n");
         retorno = TRUE;
@@ -55,9 +68,32 @@ int controller_loadFromBinary(char* path, LinkedList* pArrayListEmployee, int* p
  * \return int
  *
  */
-int controller_addEmployee(LinkedList* pArrayListEmployee)
+int controller_addEmployee(LinkedList* pArrayListEmployee, int* proxId)
 {
-    return 1;
+    char confirmacion;
+    int retorno = FALSE;
+    Employee bufferEmployee;
+    if (getName(ALTA_NOMBRE, ALTA_NOMBRE_ERROR, sizeof(bufferEmployee.nombre),
+                REINTENTOS, bufferEmployee.nombre))
+    {
+        if (getNumero(ALTA_HORAS, ALTA_HORAS_ERROR, 4, REINTENTOS,
+                      &bufferEmployee.horasTrabajadas))
+        {
+            if (getNumero(ALTA_SUELDO, ALTA_SUELDO_ERROR, 6, REINTENTOS,
+                          &bufferEmployee.sueldo))
+            {
+                bufferEmployee.id = *proxId;
+                employee_showEmployee(bufferEmployee);
+                if (getString(ALTA_CONFIRMACION, &confirmacion, sizeof(confirmacion)) &&
+                             (confirmacion == 's' || confirmacion == 'S'))
+                {
+                    ll_add(pArrayListEmployee, &bufferEmployee);
+                    retorno = TRUE;
+                }
+            }
+        }
+    }
+    return retorno;
 }
 
 /** \brief Modificar datos de empleado

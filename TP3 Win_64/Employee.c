@@ -28,7 +28,7 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,
                                  char* horasTrabajadasStr, char* sueldoStr)
 {
     Employee* emp = NULL;
-    Employee * retorno = NULL;
+    Employee* retorno = NULL;
     if (idStr != NULL && nombreStr != NULL && horasTrabajadasStr != NULL && sueldoStr != NULL)
     {
         emp = employee_new();
@@ -94,7 +94,6 @@ int employee_setIdStr(Employee* this, char* id)
             {
                 retorno = TRUE;
             }
-
         }
     }
     return retorno;
@@ -104,13 +103,13 @@ int employee_setIdStr(Employee* this, char* id)
  * \param id int LA DIRECCION DONDE VAMOS A GUARDA EL ID OBTENIDO
  * \return int 0 SI ALGO SALIO MAL, 1 SI ESTA TODO BIEN
  */
-int employee_getId(Employee* this,int* id)
+int employee_getId(Employee* this, int* id)
 {
-    int retorno = 0;
+    int retorno = FALSE;
     if (this != NULL && id != NULL)
     {
         *id = this->id;
-        retorno = 1;
+        retorno = TRUE;
     }
     return retorno;
 }
@@ -159,13 +158,13 @@ int employee_getNombre(Employee* this,char* nombre)
  * \param horasTrabajadas int LAS HORAS TRABAJADAS
  * \return int 0 SI ALGO SALIO MAL, 1 SI SALI BIEN
  */
-int employee_setHorasTrabajadas(Employee* this,int horasTrabajadas)
+int employee_setHorasTrabajadas(Employee* this, int horasTrabajadas)
 {
     int retorno = FALSE;
 
     if (this != NULL && horasTrabajadas > 0)
     {
-        this->id = horasTrabajadas;
+        this->horasTrabajadas = horasTrabajadas;
         retorno = TRUE;
     }
     return retorno;
@@ -201,7 +200,7 @@ int employee_getHorasTrabajadas(Employee* this,int* horasTrabajadas)
     int retorno = FALSE;
     if (this != NULL && horasTrabajadas != NULL)
     {
-        *horasTrabajadas = this->id;
+        *horasTrabajadas = this->horasTrabajadas;
         retorno = TRUE;
     }
     return retorno;
@@ -220,7 +219,7 @@ int employee_setSueldo(Employee* this, int sueldo)
 
     if (this != NULL && sueldo > 0)
     {
-        this->id = sueldo;
+        this->sueldo = sueldo;
         retorno = TRUE;
     }
     return retorno;
@@ -260,4 +259,12 @@ int employee_getSueldo(Employee* this,int* sueldo)
         retorno = TRUE;
     }
     return retorno;
+}
+
+
+
+void employee_showEmployee(Employee emp)
+{
+    printf("ID: %d\nNombre: %s\nSueldo: %d\nHoras Trabajadas: %d\n\n",
+           emp.id, emp.nombre, emp.sueldo, emp.horasTrabajadas);
 }
