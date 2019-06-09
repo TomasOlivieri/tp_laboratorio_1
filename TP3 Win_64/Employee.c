@@ -8,6 +8,7 @@
 
 #define TRUE 1
 #define FALSE 0
+#define TAM_BUFFER 300
 
 /** \brief
  * \return Employee* UN NUEVO EMPLEADO
@@ -285,9 +286,61 @@ int employee_getSueldo(Employee* this,int* sueldo)
 }
 
 
-
+/** \brief MUESTRA UN EMPLEADO
+ * \param emp Employee EL EMPLEADO A MOSTRAR
+ * \return void
+ */
 void employee_showEmployee(Employee emp)
 {
     printf("ID: %d\nNombre: %s\nSueldo: %d\nHoras Trabajadas: %d\n\n",
            emp.id, emp.nombre, emp.sueldo, emp.horasTrabajadas);
+}
+
+/** \brief MUESTRA UN EMPLEADO A TRAVES DE SU PUNTERO
+ * \param emp Employee* EL PUNTERO DEL EMPLEADO
+ * \return void
+ */
+void employee_showPunteroEmployee(Employee* emp)
+{
+   int id;
+   int sueldo;
+   int horasTrabajadas;
+   char nombre[TAM_BUFFER];
+
+   if (employee_getHorasTrabajadas(emp, &horasTrabajadas) && employee_getId(emp, &id) &&
+       employee_getSueldo(emp, &sueldo) && employee_getNombre(emp, nombre))
+   {
+       printf("ID: %d\nNombre: %s\nSueldo: %d\nHoras trabajadas: %d\n\n",
+              id, nombre, sueldo, horasTrabajadas);
+   }
+
+}
+
+
+/** \brief BUSCA EL INDICE DE UN EMPLEADO POR SU ID
+ * \param listaEmpleados LinkedList* LA LISTA DE EMPLEADOS
+ * \param id int EL ID QUE BUSCO
+ * \return int EL INDICE DEL EMPLEADO SI LO ENCONTRO O -1 SI NO LO ENCONTRO
+ *
+ */
+int employee_getIndexById(LinkedList* listaEmpleados, Employee* pEmpleadoBaja, int id)
+{
+    int retorno = -1;
+    int idPempleado;
+    Employee* pEmpleado = NULL;
+    if (listaEmpleados != NULL && id > 0)
+    {
+        for (int i = 0; i < ll_len(listaEmpleados); i++)
+        {
+            pEmpleado = ll_get(listaEmpleados, i);
+            employee_getId(pEmpleado, &idPempleado);
+            if (id == idPempleado)
+            {
+                pEmpleadoBaja = pEmpleado;
+                retorno = i;
+                break;
+            }
+        }
+    }
+    return retorno;
 }

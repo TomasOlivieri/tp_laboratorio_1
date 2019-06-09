@@ -16,6 +16,14 @@
 
 #define ALTA_CONFIRMACION "Esta seguro que quiere hacer la alta de este empleado: (Confirmar= 's')"
 
+
+#define BAJA_PEDIDO "Ingrese el ID del empleado: "
+
+#define BAJA_PEDIDO_ERROR "El ID solo puede contener numeros\n"
+#define BAJA_NO_ENCONRADO "El ID de empleado no fue encontrado\n"
+
+#define BAJA_CONFIRMACION "Esta seguro que quiere dar de baja este emplado: (Confirmacion 's')"
+
 #define FALSE 0
 #define TRUE 1
 #define REINTENTOS 2
@@ -123,7 +131,33 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+    int idBaja;
+    int indexBaja;
+    int retorno = FALSE;
+    char confirmacion;
+    Employee* pEmpleadoBaja = NULL;
+
+    if (pArrayListEmployee != NULL)
+    {
+        if (getNumero(BAJA_PEDIDO, BAJA_PEDIDO_ERROR, 7, REINTENTOS, &idBaja))
+        {
+            indexBaja = employee_getIndexById(pArrayListEmployee, pEmpleadoBaja, idBaja);
+            if (indexBaja != -1)
+            {
+                employee_showPunteroEmployee(pEmpleadoBaja);
+                if(getString(BAJA_CONFIRMACION, &confirmacion, sizeof(confirmacion) &&
+                          (confirmacion == 's' || confirmacion == 'S')))
+                {
+                    free(ll_pop(pArrayListEmployee, indexBaja));
+                    retorno = TRUE;
+                }
+            } else
+            {
+                printf("%s", BAJA_NO_ENCONRADO);
+            }
+        }
+    }
+    return retorno;
 }
 
 /** \brief Listar empleados

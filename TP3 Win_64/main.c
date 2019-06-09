@@ -24,14 +24,20 @@
 
 #define ALTA_EXITOSA "Alta exitosa\n\n"
 #define ALTA_NO_EXITOSA "Usted no pudo realizar el alta\n\n"
+#define BAJA_EXITOSA "Baja exitosa\n\n"
+#define BAJA_NO_EXITOSA "Usted no pudo realizar la baja\n\n"
 
 
 #define ERROR_CARGA_DOBLE "Usted ya cargo el archivo\n\n"
 #define ERROR_GUARDADO_MODO_BINARIO "Usted cargo el archivo en modo texto\nNo lo puede guardar en modo binario!\n\n"
 #define ERROR_GUARDADO_MODO_TEXTO "Usted cargo el archivo en modo binario\nNo lo puede guardar en modo texto!\n\n"
 #define ERROR_ALTA_NO_CARGA "Antes de realizar una alta, primero haga una carga del archivo\n\n"
+#define ERROR_BAJA_NO_CARGA "Antes de realizar una baja, primero haga una carga del archivo\n\n"
+
 
 #define FINAL_PROGRAMA "Programa cerrado correctamente\n\n"
+
+
 #define FALSE 0
 #define TRUE 1
 
@@ -86,7 +92,7 @@ int main()
                 flagBinario = TRUE;
             } else
             {
-                printf("s", ERROR_CARGA_DOBLE);
+                printf("%s", ERROR_CARGA_DOBLE);
             }
             break;
         case 3:
@@ -107,6 +113,19 @@ int main()
         case 4:
             break;
         case 5:
+            if (!flagCargar)
+            {
+                if (controller_removeEmployee(listaEmpleados))
+                {
+                    printf("%s", BAJA_EXITOSA);
+                } else
+                {
+                    printf("%s", BAJA_NO_EXITOSA);
+                }
+            } else
+            {
+                printf("%s", ERROR_BAJA_NO_CARGA);
+            }
             break;
         case 6:
             break;
