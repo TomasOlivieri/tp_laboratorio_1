@@ -36,4 +36,5 @@ int employee_setSueldoStr(Employee* this, char* sueldo);
 void employee_showEmployee(Employee emp);
 void employee_showPunteroEmployee(Employee* emp);
 int employee_getIndexById(LinkedList* listaEmpleados, int id);
+int employee_showListEmployee(LinkedList* listaEmpleados);
 #endif // employee_H_INCLUDED

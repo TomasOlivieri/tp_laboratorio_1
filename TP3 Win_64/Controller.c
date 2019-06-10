@@ -170,7 +170,15 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_ListEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+    int retorno = FALSE;
+    if (pArrayListEmployee != NULL)
+    {
+        if (employee_showListEmployee(pArrayListEmployee))
+        {
+            retorno = TRUE;
+        }
+    }
+    return retorno;
 }
 
 /** \brief Ordenar empleados

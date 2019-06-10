@@ -26,6 +26,7 @@
 #define ALTA_NO_EXITOSA "Usted no pudo realizar el alta\n\n"
 #define BAJA_EXITOSA "Baja exitosa\n\n"
 #define BAJA_NO_EXITOSA "Usted no pudo realizar la baja\n\n"
+#define LISTAR_NO_EXITOSA "Algo sucedio y no se pudo hacer el listado\n\n"
 
 
 #define ERROR_CARGA_DOBLE "Usted ya cargo el archivo\n\n"
@@ -33,7 +34,7 @@
 #define ERROR_GUARDADO_MODO_TEXTO "Usted cargo el archivo en modo binario\nNo lo puede guardar en modo texto!\n\n"
 #define ERROR_ALTA_NO_CARGA "Antes de realizar una alta, primero haga una carga del archivo\n\n"
 #define ERROR_BAJA_NO_CARGA "Antes de realizar una baja, primero haga una carga del archivo\n\n"
-
+#define ERROR_LISTADO_NO_CARGA "Antes de listar a los empleados, haga una carga del archivo\n\n"
 
 #define FINAL_PROGRAMA "Programa cerrado correctamente\n\n"
 
@@ -128,6 +129,16 @@ int main()
             }
             break;
         case 6:
+            if (!flagCargar)
+            {
+                if(!controller_ListEmployee(listaEmpleados))
+                {
+                    printf("%s", LISTAR_NO_EXITOSA);
+                }
+            } else
+            {
+                printf("%s", ERROR_LISTADO_NO_CARGA);
+            }
             break;
         case 7:
             break;

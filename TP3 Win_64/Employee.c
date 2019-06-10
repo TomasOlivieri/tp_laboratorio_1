@@ -343,3 +343,27 @@ int employee_getIndexById(LinkedList* listaEmpleados, int id)
     }
     return retorno;
 }
+
+
+/** \brief MUESTRA LA LISTA ENTERA DE EMPLEADOS
+ * \param listaEmpleados LinkedList* LA LISTA DE EMPLEADOS
+ * \return int 1 SI SALIO BIEN O 0 SI ALGO SALIO MAL
+ */
+int employee_showListEmployee(LinkedList* listaEmpleados)
+{
+    int retorno = FALSE;
+    Employee* emp = NULL;
+    if (listaEmpleados != NULL)
+    {
+        for (int i = 0; i < ll_len(listaEmpleados); i++)
+        {
+            emp = ll_get(listaEmpleados, i);1
+            if (emp != NULL)
+            {
+                employee_showPunteroEmployee(emp);
+            }
+        }
+        retorno = TRUE;
+    }
+    return retorno;
+}
