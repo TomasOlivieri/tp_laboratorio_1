@@ -4,10 +4,13 @@
 #include "LinkedList.h"
 #include "Controller.h"
 #include "Employee.h"
+#include "utn.h"
 #include "validaciones.h"
+
 
 #define TRUE 1
 #define FALSE 0
+#define REINTENTOS 2
 #define TAM_BUFFER 300
 
 /** \brief
@@ -357,13 +360,42 @@ int employee_showListEmployee(LinkedList* listaEmpleados)
     {
         for (int i = 0; i < ll_len(listaEmpleados); i++)
         {
-            emp = ll_get(listaEmpleados, i);1
+            emp = ll_get(listaEmpleados, i);
             if (emp != NULL)
             {
                 employee_showPunteroEmployee(emp);
             }
         }
         retorno = TRUE;
+    }
+    return retorno;
+}
+
+
+int employee_editName(Employee* emp)
+{
+    int retorno = FALSE;
+    char confirmacion;
+    char nombre[TAM_BUFFER];
+    Employee buffer = *emp;
+    if (emp != NULL)
+    {
+        if(getName("Ingrese el nuevo nombre del empleado: ",
+                "El no puede contener numero o caracteres especiales\n\n",
+                TAM_BUFFER, REINTENTOS, nombre))
+        {
+            if (employee_setNombre(&buffer, nombre))
+            {
+                employee_showEmployee(buffer);
+                if (getString("Esta seguro que quiere hacer esta modificacion? (confirmar = 's')",
+                              &confirmacion, sizeof(confirmacion)) && (confirmacion == 's' ||
+                                                                       confirmacion == 'S'))
+                {
+                    employee_setNombre(emp, nombre);
+                    retorno = TRUE;
+                }
+            }
+        }
     }
     return retorno;
 }

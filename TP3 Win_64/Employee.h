@@ -37,4 +37,5 @@ void employee_showEmployee(Employee emp);
 void employee_showPunteroEmployee(Employee* emp);
 int employee_getIndexById(LinkedList* listaEmpleados, int id);
 int employee_showListEmployee(LinkedList* listaEmpleados);
+int employee_editName(Employee* emp);
 #endif // employee_H_INCLUDED

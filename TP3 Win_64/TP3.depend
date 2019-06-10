@@ -295,7 +295,7 @@
 
 1560114740 c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\controller.h
 
-1560127498 c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\employee.h
+1560135889 c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\employee.h
 
 1560114740 c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\utn.h
 
@@ -331,7 +331,7 @@
 	"Employee.h"
 	"validaciones.h"
 
-1560127498 source:c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\controller.c
+1560135912 source:c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\controller.c
 	<stdio.h>
 	<stdlib.h>
 	"LinkedList.h"

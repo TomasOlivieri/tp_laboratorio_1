@@ -6,6 +6,7 @@
 #include "utn.h"
 
 
+
 #define ALTA_NOMBRE "Ingrese el nombre del empleado: "
 #define ALTA_HORAS "Ingrese las horas trabajadas por el empleado: "
 #define ALTA_SUELDO "Ingrese el sueldo del empleado: "
@@ -13,16 +14,29 @@
 #define ALTA_NOMBRE_ERROR "El nombre no puede contener numeros, espacios ni caracteres especiales\n\n"
 #define ALTA_HORAS_ERROR "La cantidad de horas solo puede contener numero\n\n"
 #define ALTA_SUELDO_ERROR "El sueldo solo puede contener numero\n\n"
-
 #define ALTA_CONFIRMACION "Esta seguro que quiere hacer la alta de este empleado: (Confirmar= 's')"
 
 
-#define BAJA_PEDIDO "Ingrese el ID del empleado: "
 
+#define BAJA_PEDIDO "Ingrese el ID del empleado: "
 #define BAJA_PEDIDO_ERROR "El ID solo puede contener numeros\n"
 #define BAJA_NO_ENCONRADO "El ID de empleado no fue encontrado\n"
-
 #define BAJA_CONFIRMACION "Esta seguro que quiere dar de baja este emplado: (Confirmacion 's')"
+
+
+
+#define MODIFICACION_PEDIDO "Ingrese el ID del empleado que quiere modificar: "
+#define MODIFICACION_PEDIDO_ERROR "El ID solo puede contener numeros\n"
+#define MODIFICACION_PEDIDO_NO_ENCONTRADO "El ID ingresado no fue encontrado\n"
+
+#define MODIFICACION_CONFIRMARCION_EMPLEADO "Esta seguro que quiere modificar este empleado? (confirmacion = 's')"
+
+#define MODIFICACION_NOMBRE "1. Modificar el nombre"
+#define MODIFICACION_SUELDO "2. Modificar el sueldo"
+#define MODIFICACION_HORAS "3. Modificar las horas trabajadas"
+#define MODIFICACION_PEDIDO_OPCION "Ingrese el campo que quiere modificar: "
+#define MODIFICACION_PEDIDO_OPCION_ERROR "La opcion ingresada es invalida\n\n"
+
 
 #define FALSE 0
 #define TRUE 1
@@ -111,23 +125,66 @@ int controller_addEmployee(LinkedList* pArrayListEmployee, int* proxId)
 }
 
 /** \brief Modificar datos de empleado
- *
  * \param path char*
  * \param pArrayListEmployee LinkedList*
  * \return int
- *
  */
 int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+    int idModificacion;
+    int opcion;
+    int indexModificacion;
+    int retorno = FALSE;
+    char confirmacion;
+    Employee* pEmployeeMod = NULL;
+    if (pArrayListEmployee != NULL)
+    {
+        if(getNumero(MODIFICACION_PEDIDO, MODIFICACION_PEDIDO_ERROR, 9, REINTENTOS, &idModificacion))
+        {
+            indexModificacion = employee_getIndexById(pArrayListEmployee, idModificacion);
+            if (indexModificacion != -1)
+            {
+                pEmployeeMod = ll_get(pArrayListEmployee, indexModificacion);
+                employee_showPunteroEmployee(pEmployeeMod);
+                if (getString(MODIFICACION_CONFIRMARCION_EMPLEADO, &confirmacion, sizeof(confirmacion)) &&
+                    (confirmacion == 's' || confirmacion == 'S'))
+                {
+                    printf("%s\n", MODIFICACION_NOMBRE);
+                    printf("%s\n", MODIFICACION_SUELDO);
+                    printf("%s\n", MODIFICACION_HORAS);
+                    if (getOpcion(MODIFICACION_PEDIDO_OPCION, &opcion))
+                    {
+                        switch (opcion)
+                        {
+                            case 1:
+                                if (employee_editName(pEmployeeMod))
+                                {
+                                    retorno = TRUE;
+                                }
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            default:
+                                printf("%s", MODIFICACION_PEDIDO_OPCION_ERROR);
+                        }
+                    }
+                }
+            } else
+            {
+                printf("%s", MODIFICACION_PEDIDO_NO_ENCONTRADO);
+            }
+
+        }
+    }
+    return retorno;
 }
 
 /** \brief Baja de empleado
- *
  * \param path char*
  * \param pArrayListEmployee LinkedList*
  * \return int
- *
  */
 int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
@@ -162,11 +219,9 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 }
 
 /** \brief Listar empleados
- *
  * \param path char*
  * \param pArrayListEmployee LinkedList*
  * \return int
- *
  */
 int controller_ListEmployee(LinkedList* pArrayListEmployee)
 {
