@@ -279,7 +279,7 @@ int employee_getSueldo(Employee* this,int* sueldo)
     int retorno = FALSE;
     if (this != NULL && sueldo != NULL)
     {
-        *sueldo = this->id;
+        *sueldo = this->sueldo;
         retorno = TRUE;
     }
     return retorno;
@@ -323,7 +323,7 @@ void employee_showPunteroEmployee(Employee* emp)
  * \return int EL INDICE DEL EMPLEADO SI LO ENCONTRO O -1 SI NO LO ENCONTRO
  *
  */
-int employee_getIndexById(LinkedList* listaEmpleados, Employee* pEmpleadoBaja, int id)
+int employee_getIndexById(LinkedList* listaEmpleados, int id)
 {
     int retorno = -1;
     int idPempleado;
@@ -336,7 +336,6 @@ int employee_getIndexById(LinkedList* listaEmpleados, Employee* pEmpleadoBaja, i
             employee_getId(pEmpleado, &idPempleado);
             if (id == idPempleado)
             {
-                pEmpleadoBaja = pEmpleado;
                 retorno = i;
                 break;
             }

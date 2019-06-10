@@ -283,7 +283,7 @@
 	"LinkedList.h"
 	"Employee.h"
 
-1560114740 source:c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\main.c
+1560118608 source:c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\main.c
 	<stdio.h>
 	<stdlib.h>
 	"LinkedList.h"
@@ -295,7 +295,7 @@
 
 1560114740 c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\controller.h
 
-1560117900 c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\employee.h
+1560125611 c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\employee.h
 
 1560114740 c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\utn.h
 
@@ -321,4 +321,23 @@
 	<string.h>
 	<ctype.h>
 	"validaciones.h"
+
+1560125719 source:c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\employee.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+	"validaciones.h"
+
+1560125611 source:c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\controller.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Employee.h"
+	"parser.h"
+	"utn.h"
+
+1560114740 c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\parser.h
 

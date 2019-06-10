@@ -139,16 +139,17 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 
     if (pArrayListEmployee != NULL)
     {
-        if (getNumero(BAJA_PEDIDO, BAJA_PEDIDO_ERROR, 7, REINTENTOS, &idBaja))
+        if (getNumero(BAJA_PEDIDO, BAJA_PEDIDO_ERROR, 9, REINTENTOS, &idBaja))
         {
-            indexBaja = employee_getIndexById(pArrayListEmployee, pEmpleadoBaja, idBaja);
+            indexBaja = employee_getIndexById(pArrayListEmployee, idBaja);
             if (indexBaja != -1)
             {
+                pEmpleadoBaja = ll_get(pArrayListEmployee, indexBaja);
                 employee_showPunteroEmployee(pEmpleadoBaja);
-                if(getString(BAJA_CONFIRMACION, &confirmacion, sizeof(confirmacion) &&
-                          (confirmacion == 's' || confirmacion == 'S')))
+                if(getString(BAJA_CONFIRMACION, &confirmacion, sizeof(confirmacion)) &&
+                            (confirmacion == 's' || confirmacion == 'S'))
                 {
-                    free(ll_pop(pArrayListEmployee, indexBaja));
+                    employee_delete(ll_pop(pArrayListEmployee, indexBaja));
                     retorno = TRUE;
                 }
             } else
