@@ -121,6 +121,7 @@ void addNodeTestCase05(void)
     test_addNode(list,0,other);
 
     nodoAux = test_getNode(list,0);
+    utest_assertNotNullMsg(nodoAux,"\nExiste un error al intentar obtener el nodo.\n El valor de retorno no puede ser NULL\n");
     utest_assertEqualsPointerMsg(nodoAux->pElement,other,"El puntero al employee agregado en la pos 0 no corresponde\n");
 
     for (i=0;i < LENGTH;i++)

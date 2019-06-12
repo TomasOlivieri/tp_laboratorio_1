@@ -52,8 +52,16 @@ int ll_len(LinkedList* this)
  */
 static Node* getNode(LinkedList* this, int nodeIndex)
 {
+    int i;
     Node* pNode = NULL;
-
+    if (this != NULL && nodeIndex >= 0 && nodeIndex < ll_len(this))
+    {
+        pNode = this->pFirstNode;
+        for(i=0; i<nodeIndex; i++)
+        {
+            pNode = pNode->pNextNode;
+        }
+    }
     return pNode;
 }
 
@@ -80,10 +88,46 @@ Node* test_getNode(LinkedList* this, int nodeIndex)
                         ( 0) Si funciono correctamente
  *
  */
-static int addNode(LinkedList* this, int nodeIndex,void* pElement)
+static int addNode(LinkedList* this, int nodeIndex, void* pElement)
 {
     int returnAux = -1;
+    if (this != NULL && nodeIndex >= 0 && nodeIndex <= ll_len(this))
+    {
+        Node* pNodoActual = NULL;
+        Node* pNodoProximo = NULL;
+        Node* pNewNode = (Node*)malloc(sizeof(Node));
+        if (pNewNode != NULL)
+        {
+            if (nodeIndex == 0)
+            {
+                pNodoActual = this->pFirstNode;
+                if (pNodoActual == NULL)
+                {
+                    this->pFirstNode = pNewNode;
+                    pNewNode->pNextNode = NULL;
+                    pNewNode->pElement = pElement;
+                } else
+                {
+                    this->pFirstNode = pNewNode;
+                    pNewNode->pNextNode = pNodoActual;
+                    pNewNode->pElement = pElement;
+                }
+            } else
+            {
+                pNodoActual = getNode(this, nodeIndex -1);
+                pNodoProximo = getNode(this, nodeIndex);
+                if (pNewNode != NULL)
+                {
+                    pNewNode->pElement = pElement;
+                    pNewNode->pNextNode = pNodoProximo;
+                    pNodoActual->pNextNode = pNewNode;
+                    this->size++;
+                    returnAux = 0;
+                }
+            }
 
+        }
+    }
     return returnAux;
 }
 
