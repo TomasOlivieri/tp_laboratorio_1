@@ -341,3 +341,62 @@
 
 1560114740 c:\users\rocio\desktop\tp_laboratorio_1\tp3 win_64\parser.h
 
+1560306372 source:c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\controller.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Employee.h"
+	"parser.h"
+	"utn.h"
+
+1560032209 c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\linkedlist.h
+
+1560306174 c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\employee.h
+
+1560032209 c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\parser.h
+
+1560032209 c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\utn.h
+
+1560307073 source:c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\main.c
+	<stdio.h>
+	<stdlib.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+	"utn.h"
+
+1560032209 c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\controller.h
+
+1560032209 source:c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\parser.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"LinkedList.h"
+	"Employee.h"
+
+1560032209 source:c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\utn.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"validaciones.h"
+
+1560032209 c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\validaciones.h
+
+1560032209 source:c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\validaciones.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"validaciones.h"
+
+1560306075 source:c:\users\prudan\desktop\tp_laboratorio_1\tp3 win_64\employee.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"LinkedList.h"
+	"Controller.h"
+	"Employee.h"
+	"utn.h"
+	"validaciones.h"
+

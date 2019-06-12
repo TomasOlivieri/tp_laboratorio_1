@@ -35,7 +35,16 @@ int employee_setSueldoStr(Employee* this, char* sueldo);
 
 void employee_showEmployee(Employee emp);
 void employee_showPunteroEmployee(Employee* emp);
-int employee_getIndexById(LinkedList* listaEmpleados, int id);
 int employee_showListEmployee(LinkedList* listaEmpleados);
+
+int employee_getIndexById(LinkedList* listaEmpleados, int id);
+
 int employee_editName(Employee* emp);
+int employee_editSueldo(Employee* emp);
+int employee_editHorasTrabajadas(Employee* emp);
+
+int employee_criterioById(void* thisA, void* thisB);
+int employee_criterioByNombre(void* thisA, void* thisB);
+int employee_criterioBySueldo(void* thisA, void* thisB);
+int employee_criterioByHorasTrabajadas(void* thisA, void* thisB);
 #endif // employee_H_INCLUDED

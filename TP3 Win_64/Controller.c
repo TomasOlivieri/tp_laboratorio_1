@@ -163,8 +163,16 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
                                 }
                                 break;
                             case 2:
+                                if (employee_editSueldo(pEmployeeMod))
+                                {
+                                    retorno = TRUE;
+                                }
                                 break;
                             case 3:
+                                if (employee_editHorasTrabajadas(pEmployeeMod))
+                                {
+                                    retorno = TRUE;
+                                }
                                 break;
                             default:
                                 printf("%s", MODIFICACION_PEDIDO_OPCION_ERROR);
@@ -245,7 +253,61 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+    int retorno = FALSE;
+    if (pArrayListEmployee != NULL)
+    {
+       int opcion;
+       printf("Ingrese el orden por el que quiere ser ordenado el array\n");
+       printf("1. Por ID de menor a mayor\n");
+       printf("2. Por ID de mayor a menor\n");
+       printf("3. Por nombre de la A a la Z\n");
+       printf("4. Por nombre de la Z a la A\n");
+       printf("5. Por sueldo de menor a mayor\n");
+       printf("6. Por sueldo de mayor a menor\n");
+       printf("7. Por horas trabajadas de menor a mayor\n");
+       printf("8. Por horas trabajadas de mayor a menor\n");
+       if (getOpcion("Su opcion: ", &opcion))
+       {
+           switch (opcion)
+           {
+                case 1:
+                    ll_sort(pArrayListEmployee, employee_criterioById, 1);
+                    retorno = TRUE;
+                    break;
+                case 2:
+                    ll_sort(pArrayListEmployee, employee_criterioById, 0);
+                    retorno = TRUE;
+                    break;
+                case 3:
+                    ll_sort(pArrayListEmployee, employee_criterioByNombre, 1);
+                    retorno = TRUE;
+                    break;
+                case 4:
+                    ll_sort(pArrayListEmployee, employee_criterioByNombre, 0);
+                    retorno = TRUE;
+                    break;
+                case 5:
+                    ll_sort(pArrayListEmployee, employee_criterioBySueldo, 1);
+                    retorno = TRUE;
+                    break;
+                case 6:
+                    ll_sort(pArrayListEmployee, employee_criterioBySueldo, 0);
+                    retorno = TRUE;
+                    break;
+                case 7:
+                    ll_sort(pArrayListEmployee, employee_criterioByHorasTrabajadas, 1);
+                    retorno = TRUE;
+                    break;
+                case 8:
+                    ll_sort(pArrayListEmployee, employee_criterioByHorasTrabajadas, 0);
+                    retorno = TRUE;
+                    break;
+                default:
+                    printf("Opcion ingreada es invalida\n\n");
+           }
+       }
+    }
+    return retorno;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).

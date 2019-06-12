@@ -372,6 +372,10 @@ int employee_showListEmployee(LinkedList* listaEmpleados)
 }
 
 
+/** \brief EDITA EL NOMBRE DE UN EMPLEADO
+ * \param emp Employee* EL EMPLEADO
+ * \return int 0 SI ALGO SALIO MAL, 1 SI SALIO TODO BIEN
+ */
 int employee_editName(Employee* emp)
 {
     int retorno = FALSE;
@@ -381,7 +385,7 @@ int employee_editName(Employee* emp)
     if (emp != NULL)
     {
         if(getName("Ingrese el nuevo nombre del empleado: ",
-                "El no puede contener numero o caracteres especiales\n\n",
+                "El nombre no puede contener numero o caracteres especiales\n\n",
                 TAM_BUFFER, REINTENTOS, nombre))
         {
             if (employee_setNombre(&buffer, nombre))
@@ -396,6 +400,172 @@ int employee_editName(Employee* emp)
                 }
             }
         }
+    }
+    return retorno;
+}
+
+
+/** \brief EDITA EL SUELDO DE UN EMPLEADO
+ * \param emp Employee* EL EMPLEADO
+ * \return int 1 SI SALIO BIEN, 0 SI ALGO SALIO MAL
+ */
+int employee_editSueldo(Employee* emp)
+{
+    int retorno = FALSE;
+    char confirmacion;
+    int newSueldo;
+    Employee buffer = *emp;
+    if (emp != NULL)
+    {
+        if(getNumero("Ingrese el nuevo sueldo del empleado: ",
+                "El sueldo solo puede estar compuesto por numeros\n\n",
+                TAM_BUFFER, REINTENTOS, &newSueldo))
+        {
+            if (employee_setSueldo(&buffer, newSueldo))
+            {
+                employee_showEmployee(buffer);
+                if (getString("Esta seguro que quiere hacer esta modificacion? (confirmar = 's')",
+                              &confirmacion, sizeof(confirmacion)) && (confirmacion == 's' ||
+                                                                       confirmacion == 'S'))
+                {
+                    employee_setSueldo(emp, newSueldo);
+                    retorno = TRUE;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
+
+/** \brief MODIFICA LAS HORAS TRABAJADAS DE UN EMPLEADO
+ * \param emp Employee* EL EMPLEADO
+ * \return int 1 SI SALIO BIEN, 0 SI ALGO SALIO MAL
+ */
+int employee_editHorasTrabajadas(Employee* emp)
+{
+    int retorno = FALSE;
+    char confirmacion;
+    int newHoras;
+    Employee buffer = *emp;
+    if (emp != NULL)
+    {
+        if(getNumero("Ingrese las nuevas horas trabajadas por el empleado: ",
+                "Las horas trabajadas solo puede estar compuesto por numeros\n\n",
+                TAM_BUFFER, REINTENTOS, &newHoras))
+        {
+            if (employee_setHorasTrabajadas(&buffer, newHoras))
+            {
+                employee_showEmployee(buffer);
+                if (getString("Esta seguro que quiere hacer esta modificacion? (confirmar = 's')",
+                              &confirmacion, sizeof(confirmacion)) && (confirmacion == 's' ||
+                                                                       confirmacion == 'S'))
+                {
+                    employee_setHorasTrabajadas(emp, newHoras);
+                    retorno = TRUE;
+                }
+            }
+        }
+    }
+    return retorno;
+}
+
+
+/** \brief COMPARA EL ID DE DOS EMPLEADOS
+ * \param thisA void*
+ * \param thisB void*
+ * \return int 1 SI EL PRIMERO ES MAYOR
+ *            -1 SI EL PRIMERO ES MENOR
+ *
+ */
+int employee_criterioById(void* thisA, void* thisB)
+{
+    int idA;
+    int idB;
+    int retorno = 0;
+    employee_getId(thisA,&idA);
+    employee_getId(thisB,&idB);
+    if(idA > idB)
+    {
+        retorno = 1;
+    }
+    else if(idB > idA)
+    {
+        retorno = -1;
+    }
+    return retorno;
+}
+
+/** \brief COMPARA EL NOMBRE DE DOS EMPLEADOS
+ * \param thisA void*
+ * \param thisB void*
+ * \return int 1 SI EL PRIMERO ES MAYOR
+ *            -1 SI EL PRIMERO ES MENOR
+ */
+int employee_criterioByNombre(void* thisA, void* thisB)
+{
+    char nombreA[128];
+    char nombreB[128];
+    int retorno = 0;
+    employee_getNombre(thisA,nombreA);
+    employee_getNombre(thisB,nombreB);
+    if(strcmp(nombreA,nombreB) > 0)
+    {
+        retorno = 1;
+    }
+    else if(strcmp(nombreA,nombreB) < 0)
+    {
+        retorno = -1;
+    }
+    return retorno;
+}
+
+/** \brief COMPARA EL SUELDO DE DOS EMPLEADOS
+ * \param thisA void*
+ * \param thisB void*
+ * \return int 1 SI EL PRIMERO ES MAYOR
+ *            -1 SI EL PRIMERO ES MENOR
+ *
+ */
+int employee_criterioBySueldo(void* thisA, void* thisB)
+{
+    int sueldoA;
+    int sueldoB;
+    int retorno = 0;
+    employee_getSueldo(thisA,&sueldoA);
+    employee_getSueldo(thisB,&sueldoB);
+    if(sueldoA > sueldoB)
+    {
+        retorno = 1;
+    }
+    else if(sueldoA > sueldoB)
+    {
+        retorno = -1;
+    }
+    return retorno;
+}
+
+/** \brief COMPARA LAS HORAS TRABAJADAS DE DOS EMPLEADOS
+ * \param thisA void*
+ * \param thisB void*
+ * \return int 1 SI EL PRIMERO ES MAYOR
+ *            -1 SI EL PRIMERO ES MENOR
+ *
+ */
+int employee_criterioByHorasTrabajadas(void* thisA, void* thisB)
+{
+    int horasA;
+    int horasB;
+    int retorno = 0;
+    employee_getSueldo(thisA,&horasA);
+    employee_getSueldo(thisB,&horasB);
+    if(horasA > horasB)
+    {
+        retorno = 1;
+    }
+    else if(horasB > horasA)
+    {
+        retorno = -1;
     }
     return retorno;
 }

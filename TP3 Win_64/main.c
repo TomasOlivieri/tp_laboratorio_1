@@ -27,6 +27,8 @@
 #define BAJA_EXITOSA "Baja exitosa\n\n"
 #define BAJA_NO_EXITOSA "Usted no pudo realizar la baja\n\n"
 #define LISTAR_NO_EXITOSA "Algo sucedio y no se pudo hacer el listado\n\n"
+#define MODIFICACION_EXITOSA "Modificacion exitosa\n\n"
+#define MODIFICACION_NO_EXITOSA "Usted no pudo realizar la modificacion\n\n"
 
 
 #define ERROR_CARGA_DOBLE "Usted ya cargo el archivo\n\n"
@@ -35,6 +37,7 @@
 #define ERROR_ALTA_NO_CARGA "Antes de realizar una alta, primero haga una carga del archivo\n\n"
 #define ERROR_BAJA_NO_CARGA "Antes de realizar una baja, primero haga una carga del archivo\n\n"
 #define ERROR_LISTADO_NO_CARGA "Antes de listar a los empleados, haga una carga del archivo\n\n"
+#define ERROR_MODIFICACION_NO_CARGA "Antes de realizar una edicion, primero haga una carga\n\n"
 
 #define FINAL_PROGRAMA "Programa cerrado correctamente\n\n"
 
@@ -112,6 +115,19 @@ int main()
             }
             break;
         case 4:
+            if (!flagCargar)
+            {
+                if (controller_editEmployee(listaEmpleados))
+                {
+                    printf("%s", MODIFICACION_EXITOSA);
+                } else
+                {
+                    printf("%s", MODIFICACION_NO_EXITOSA);
+                }
+            } else
+            {
+                printf("%s", ERROR_MODIFICACION_NO_CARGA);
+            }
             break;
         case 5:
             if (!flagCargar)
@@ -141,6 +157,14 @@ int main()
             }
             break;
         case 7:
+            if (!flagCargar)
+            {
+                controller_sortEmployee(listaEmpleados);
+                printf("Ordenamiento realizado");
+            } else
+            {
+                printf("%s", ERROR_LISTADO_NO_CARGA);
+            }
             break;
         case 8:
             if (flagTexto)
