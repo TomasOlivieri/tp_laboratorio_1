@@ -53,24 +53,26 @@
 	"LinkedList.h"
 	"Employee.h"
 
-1559858518 source:c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\controller.c
+1560460407 source:c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\controller.c
 	<stdio.h>
 	<stdlib.h>
 	"LinkedList.h"
 	"Employee.h"
 	"parser.h"
+	"utn.h"
 
-1559856920 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\linkedlist.h
+1560460407 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\linkedlist.h
 
-1559856920 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\employee.h
+1560460407 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\employee.h
 
-1559859302 source:c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\employee.c
+1560460407 source:c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\employee.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"LinkedList.h"
 	"Controller.h"
 	"Employee.h"
+	"utn.h"
 	"validaciones.h"
 
 1559859497 source:c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\main.c
@@ -81,34 +83,34 @@
 	"Employee.h"
 	"utn.h"
 
-1559858442 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\controller.h
+1560460407 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\controller.h
 
-1559859419 source:c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\parser.c
+1560460407 source:c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\parser.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"LinkedList.h"
 	"Employee.h"
 
-1559856920 source:c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\validaciones.c
+1560460407 source:c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\validaciones.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	"validaciones.h"
 
-1559856920 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\validaciones.h
+1560460407 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\validaciones.h
 
-1559858518 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\parser.h
+1560460407 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\parser.h
 
-1559856920 source:c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\utn.c
+1560460407 source:c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\utn.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	"validaciones.h"
 
-1559856920 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\utn.h
+1560460407 c:\users\alumno\desktop\tp_laboratorio_1\tp3 win_64\utn.h
 
 1559693817 source:c:\users\alumno\desktop\caca\tp_laboratorio_1\tp3 win_64\controller.c
 	<stdio.h>

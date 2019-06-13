@@ -185,6 +185,7 @@ int main()
             }
             break;
         case 10:
+            ll_deleteLinkedList(listaEmpleados);
             printf("%s", FINAL_PROGRAMA);
             break;
         default:
