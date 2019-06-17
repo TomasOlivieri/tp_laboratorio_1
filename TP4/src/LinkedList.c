@@ -455,7 +455,6 @@ int ll_containsAll(LinkedList* this,LinkedList* this2)
 LinkedList* ll_subList(LinkedList* this,int from,int to)
 {
     LinkedList* cloneArray = NULL;
-    Node* nodeAux = NULL;
     void* pElementAux = NULL;
     if (this != NULL && from >= 0 && from <= to && to <= ll_len(this))
     {
@@ -499,14 +498,51 @@ LinkedList* ll_clone(LinkedList* this)
  */
 int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
 {
-    int returnAux =-1;
-
-/*    if (this != NULL)
+    int returnAux = -1;
+    int i;
+    int flagSwap;
+    Node* auxNode;
+    if(this != NULL && ll_len(this) > 0 && (order == 1 || order == 0) && pFunc != NULL)
     {
-        for (int i = 0; i < ll_len(this); i++)
+        do
         {
-        }
-    }*/
+            auxNode = getNode(this, 0);
+            flagSwap = 0;
+            for(i=0; i<ll_len(this)-1; i++)
+            {
+                if( (order == 0 && (*pFunc)(auxNode->pElement, auxNode->pNextNode->pElement) == -1) ||
+
+                    (order == 1 && (*pFunc)(auxNode->pElement, auxNode->pNextNode->pElement) == 1))
+                {
+                    flagSwap = 1;
+                    ll_swapElement(this, auxNode);
+                }
+                auxNode = auxNode->pNextNode;
+            }
+        }
+        while(flagSwap==1);
+        returnAux = 0;
+    }
     return returnAux;
 }
 
+/** \brief Intercambia los elementos de dos nodos consecutivos
+ * \param pList LinkedList* Puntero a la lista
+ * \param pNodeAnterior Es el primer nodo que se va a intercambiar, el segundo lo obtenemos de su pNextNode
+ * \return int Retorna  (-1) Error: si el puntero a la lista es NULL o alguno de los nodos es NULL
+                                ( 0) Si ok
+ */
+int ll_swapElement(LinkedList* this, Node* pNodeAnterior)
+{
+    int returnAux = -1;
+    Node* pNodeSiguiente = pNodeAnterior->pNextNode;
+    void* auxElement = NULL;
+    if(this != NULL && pNodeAnterior != NULL && pNodeSiguiente != NULL)
+    {
+        auxElement = pNodeAnterior->pElement;
+        pNodeAnterior->pElement = pNodeSiguiente->pElement;
+        pNodeSiguiente->pElement = auxElement;
+        returnAux = 0;
+    }
+    return returnAux;
+}
