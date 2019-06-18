@@ -43,41 +43,8 @@ int main(void)
         startTesting(15); // ll_contains
         startTesting(16); // ll_containsAll
         startTesting(17); // ll_subList
-        startTesting(18); // ll_clone*/
+        startTesting(18); // ll_clone
         startTesting(19); // ll_sort
 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

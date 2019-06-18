@@ -499,20 +499,21 @@ LinkedList* ll_clone(LinkedList* this)
 int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
 {
     int returnAux = -1;
-    int i;
-    int flagSwap;
-    Node* auxNode;
+    int flagSwap = 0;
+    Node* auxNode = NULL;
     if(this != NULL && ll_len(this) > 0 && (order == 1 || order == 0) && pFunc != NULL)
     {
         do
         {
             auxNode = getNode(this, 0);
             flagSwap = 0;
-            for(i=0; i<ll_len(this)-1; i++)
+            for(int i=0; i<ll_len(this)-1; i++)
             {
-                if( (order == 0 && (*pFunc)(auxNode->pElement, auxNode->pNextNode->pElement) == -1) ||
+                if( (order == 0 && auxNode->pElement != NULL && auxNode->pNextNode->pElement != NULL &&
+                    (*pFunc)(auxNode->pElement, auxNode->pNextNode->pElement) == -1) ||
 
-                    (order == 1 && (*pFunc)(auxNode->pElement, auxNode->pNextNode->pElement) == 1))
+                    (order == 1 && auxNode->pElement != NULL && auxNode->pNextNode->pElement != NULL &&
+                    (*pFunc)(auxNode->pElement, auxNode->pNextNode->pElement) == 1))
                 {
                     flagSwap = 1;
                     ll_swapElement(this, auxNode);
@@ -526,11 +527,11 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
     return returnAux;
 }
 
-/** \brief Intercambia los elementos de dos nodos consecutivos
- * \param pList LinkedList* Puntero a la lista
- * \param pNodeAnterior Es el primer nodo que se va a intercambiar, el segundo lo obtenemos de su pNextNode
- * \return int Retorna  (-1) Error: si el puntero a la lista es NULL o alguno de los nodos es NULL
-                                ( 0) Si ok
+/** \brief INTERCAMBIA LOS ELEMENTOS DE DOS NODOS CONSECUTIVOS
+ * \param LinkedList* this PUNTERO A LA LISTA
+ * \param Node* pNodeAnterior ES EL NODO DEL PRIMER ELEMENTO
+ * \return -1 Error: SI EL PUNTERO A LA LISTA ES NULL O EL NODO ES NULL
+            0 SI SALIO TODO BIEN
  */
 int ll_swapElement(LinkedList* this, Node* pNodeAnterior)
 {
@@ -542,6 +543,79 @@ int ll_swapElement(LinkedList* this, Node* pNodeAnterior)
         auxElement = pNodeAnterior->pElement;
         pNodeAnterior->pElement = pNodeSiguiente->pElement;
         pNodeSiguiente->pElement = auxElement;
+        returnAux = 0;
+    }
+    return returnAux;
+}
+
+
+/** \brief SE LE APLICA UNA FUNCION A TODOS LOS ELEMENTOS DE LA LISTA
+ * \param LinkedList* this LA LISTA DE EMPLEADOS
+ * \param int (*pFunc)(void*) LA FUNCION QUE SE LE APLICA A CADA EMPLEADO
+ * \return -1 SI LA LISTA ES NULL O EL PUNTERO A FUNCION ES NULL
+            1 SI LOS PARAMETROS SON CORRECTOS Y SE LE PUDO APLICAR LA FUNCION A TODOS LOS ELEMENTOS DE LA LISTA
+ */
+int ll_map (LinkedList* this, int (*pFunc)(void*))
+{
+    int returnAux = -1;
+    void* auxElement = NULL;
+    if (this != NULL && pFunc != NULL)
+    {
+        for (int i = 0; i < ll_len(this); i++)
+        {
+            auxElement = ll_get(this, i);
+            pFunc(auxElement);
+        }
+        returnAux = 0;
+    }
+    return returnAux;
+}
+
+
+/** \brief FUNCION QUE CREA Y DEVUELVA UNA NUEVA LISTA DE EMPLEADOS, CUYOS EMPLEADOS CUMPLE CON UN CIERTO CRITERIO
+ * \param LinkedList* this PUNTERO A LA LISTA DE EMPLEADOS
+ * \param int (*pFunc)(void*) CRITERIO PARA AGREGAR A LA NUEVA LISTA
+ * \return NULL SI NO SE PUDO CREAR LA NUEVA LISTA, LA LISTA POR PARAMETROS ES NULL Y/O LA FUNCION ES NULL
+ *         UN PUNTERO A UNA NUEVA LISTA DE EMPLEADOS
+ */
+LinkedList* ll_filter (LinkedList* this, int (*pFunc)(void*))
+{
+    LinkedList* returnLista = ll_newLinkedList();
+    void* pElement = NULL;
+    if (this != NULL && pFunc != NULL && returnLista != NULL)
+    {
+        for (int i = 0; i < ll_len(this); i++)
+        {
+            pElement = ll_get(this, i);
+            if (pFunc(pElement))
+            {
+                ll_add(returnLista, pElement);
+            }
+        }
+    }
+    return returnLista;
+}
+
+/** \brief DE UNA LISTA, ELIMINA ELEMENTOS SI NO CUMPLEN CON SUS PARAMETROS
+ * \param LinkedList* this PUNTERO A LA LISTA
+ * \param int (*pFunc)(void*) FUNCION PARAMETRO
+ * \return -1 SI LEL PUNTERO A LA LISTA ES NULL O EL PUNTERO A FUNCION ES NULL
+            0 SI LOS PARAMETROS SON CORRECTOS Y PUDO BORRAR LA LISTA NUEVA
+ */
+int ll_review (LinkedList* this, int (*pFunc)(void*))
+{
+    int returnAux = -1;
+    void* pElement = NULL;
+    if (this != NULL && pFunc != NULL)
+    {
+        for (int i = 0; i < ll_len(this); i++)
+        {
+            pElement = ll_get(this, i);
+            if (pFunc(pElement))
+            {
+                free(ll_pop(this, i));
+            }
+        }
         returnAux = 0;
     }
     return returnAux;
