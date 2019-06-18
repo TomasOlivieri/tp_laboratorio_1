@@ -614,6 +614,7 @@ int ll_review (LinkedList* this, int (*pFunc)(void*))
             if (pFunc(pElement))
             {
                 free(ll_pop(this, i));
+                i--;
             }
         }
         returnAux = 0;
