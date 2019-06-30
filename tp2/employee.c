@@ -29,13 +29,13 @@
 
 
 
-int sec_init(sSector* sector, int tam)
+int sec_init(Sector* sector, int tam)
 {
     int retorno = FALSE;
 
     if (sector != NULL && tam > 0)
     {
-        sSector bufferSector[5] =
+        Sector bufferSector[5] =
         {
             {1, "Juridico"},
             {2, "Contable"},
@@ -55,7 +55,7 @@ int sec_init(sSector* sector, int tam)
 
 
 
-int emp_init (sEmployee* employee, int tam)
+int emp_init (Employee* employee, int tam)
 {
     int retorno = FALSE;
     if (employee != NULL && tam > 0)
@@ -69,7 +69,7 @@ int emp_init (sEmployee* employee, int tam)
     return retorno;
 }
 
-int emp_buscarLibre (sEmployee* employee, int tam)
+int emp_buscarLibre (Employee* employee, int tam)
 {
     int retorno = LLENO;
     if (employee != NULL && tam > 0)
@@ -87,7 +87,7 @@ int emp_buscarLibre (sEmployee* employee, int tam)
 }
 
 
-int emp_buscarIguales (sEmployee* employee, int tam, int id)
+int emp_buscarIguales (Employee* employee, int tam, int id)
 {
     int retorno = FALSE;
     if (employee != NULL && tam > 0 && id > 0)
@@ -105,9 +105,9 @@ int emp_buscarIguales (sEmployee* employee, int tam, int id)
 }
 
 
-void emp_hardcode (sEmployee* employee, int tam)
+void emp_hardcode (Employee* employee, int tam)
 {
-    sEmployee bufferEmployee[5] =
+    Employee bufferEmployee[5] =
     {
         {1, "Tomas", "Olivieri", 5000.00, 1, 0},
         {2, "Seba", "Olivieri", 20000.00, 1, 0},
@@ -123,13 +123,13 @@ void emp_hardcode (sEmployee* employee, int tam)
 }
 
 
-int emp_alta (sEmployee* employees, int tamEmp, sSector* sectores, int tamSec)
+int emp_alta (Employee* employees, int tamEmp, Sector* sectores, int tamSec)
 {
     system("cls");
     int retorno = FALSE;
     if (employees != NULL && tamEmp > 0 && sectores != NULL && tamSec > 0)
     {
-        sEmployee bufferEmployee;
+        Employee bufferEmployee;
         int indice = emp_buscarLibre(employees, tamEmp);
         if (indice != LLENO)
         {
@@ -143,6 +143,7 @@ int emp_alta (sEmployee* employees, int tamEmp, sSector* sectores, int tamSec)
                         {
                             system("cls");
                             bufferEmployee.id_employee = indice + 1;
+                            bufferEmployee.isEmpty = FALSE;
                             emp_showEmployee(bufferEmployee, sectores, tamSec);
                             if (getConfirmacion(PEDIR_CONFIRMACION, CONFIRMACION_DENEGADA))
                             {
@@ -162,7 +163,7 @@ int emp_alta (sEmployee* employees, int tamEmp, sSector* sectores, int tamSec)
 }
 
 
-void emp_showEmployee (sEmployee employee, sSector* sectores, int tamSec)
+void emp_showEmployee (Employee employee, Sector* sectores, int tamSec)
 {
     if (sectores != NULL && tamSec > 0)
     {
@@ -173,7 +174,7 @@ void emp_showEmployee (sEmployee employee, sSector* sectores, int tamSec)
 }
 
 
-void emp_showEmployees (sEmployee* employees, sSector* sectores, int tamSec, int tamEmp)
+void emp_showEmployees (Employee* employees, Sector* sectores, int tamSec, int tamEmp)
 {
     if (employees != NULL && sectores != NULL && tamSec > 0 && tamEmp > 0)
     {
@@ -190,7 +191,7 @@ void emp_showEmployees (sEmployee* employees, sSector* sectores, int tamSec, int
 }
 
 
-void emp_obtenerStringSector (int enteroSector, sSector* sectores, int tamSector, int tamBuffer, char* charSector)
+void emp_obtenerStringSector (int enteroSector, Sector* sectores, int tamSector, int tamBuffer, char* charSector)
 {
     if (enteroSector > 0 && sectores != NULL && tamSector > 0 && tamBuffer > 0 && charSector != NULL)
     {
@@ -206,7 +207,7 @@ void emp_obtenerStringSector (int enteroSector, sSector* sectores, int tamSector
 }
 
 
-void sec_showSectores (sSector* sectores, int tamSec)
+void sec_showSectores (Sector* sectores, int tamSec)
 {
     printf("\n");
     for (int i = 0; i < tamSec; i++)
@@ -216,13 +217,13 @@ void sec_showSectores (sSector* sectores, int tamSec)
 }
 
 
-void sec_showSector (sSector sector)
+void sec_showSector (Sector sector)
 {
     printf("Id: %d\nSector: %s\n", sector.id_sector, sector.sector);
 }
 
 
-int emp_getSector (char* msg, char* msgError,sSector* sectores, int tamSec, int reintentos, int* sectorEmpleado)
+int emp_getSector (char* msg, char* msgError, Sector* sectores, int tamSec, int reintentos, int* sectorEmpleado)
 {
     char bufferSector[1];
     int retorno = FALSE;
@@ -243,18 +244,20 @@ int emp_getSector (char* msg, char* msgError,sSector* sectores, int tamSec, int 
 }
 
 
-int emp_modificarEmployee (char* primeraOpcion, char* segundaOpcion ,char* pedidoEmpleado ,char* msg, char* msgError, sEmployee* employees,
-                           int tamEmp, sSector* sectores, int tamSec, int reiteracion, char* msgNombre, char* msgNombreError, char* msgApellido, char* msgApellidoError)
+int emp_modificarEmployee (char* primeraOpcion, char* segundaOpcion ,char* pedidoEmpleado ,char* msg, char* msgError, Employee* employees,
+                           int tamEmp, Sector* sectores, int tamSec, int reiteracion, char* msgNombre, char* msgNombreError, char* msgApellido, char* msgApellidoError)
 {
     int retorno = FALSE;
-    if (primeraOpcion != NULL && segundaOpcion != NULL && pedidoEmpleado != NULL && msg != NULL && msgError != NULL && employees != NULL && sectores != NULL && tamEmp > 0 && tamSec > 0)
+    if (primeraOpcion != NULL && segundaOpcion != NULL && pedidoEmpleado != NULL && msg != NULL &&
+        msgError != NULL && employees != NULL && sectores != NULL && tamEmp > 0 && tamSec > 0)
     {
-        sEmployee bufferEmployee;
+        Employee bufferEmployee;
         int opcion;
         int indice;
         if (getEmployee(employees, tamEmp, sectores, tamSec, &indice, msg, msgError))
         {
-            if (menu_modificacion(primeraOpcion, segundaOpcion, msgError, pedidoEmpleado, employees, tamEmp, sectores, tamSec, &opcion))
+            if (menu_modificacion(primeraOpcion, segundaOpcion, msgError,
+                                  pedidoEmpleado, employees, tamEmp, sectores, tamSec, &opcion))
             {
                 switch (opcion)
                 {
@@ -282,7 +285,7 @@ int emp_modificarEmployee (char* primeraOpcion, char* segundaOpcion ,char* pedid
 }
 
 
-int isValidID (char* buffer, sEmployee* employees, int tamEmp)
+int isValidID (char* buffer, Employee* employees, int tamEmp)
 {
     int retorno = FALSE;
     if (buffer != NULL && employees != NULL && tamEmp > 0)
@@ -313,7 +316,7 @@ int isValidID (char* buffer, sEmployee* employees, int tamEmp)
 }
 
 
-int getEmployee(sEmployee* employees, int tamEmp, sSector* sectores, int tamSec, int* indice, char* msg, char* msgError)
+int getEmployee(Employee* employees, int tamEmp, Sector* sectores, int tamSec, int* indice, char* msg, char* msgError)
 {
     int retorno = FALSE;
     if (employees != NULL && tamEmp > 0 && sectores != NULL && tamSec > 0 && indice != NULL && msg != NULL && msgError != NULL)
@@ -333,10 +336,12 @@ int getEmployee(sEmployee* employees, int tamEmp, sSector* sectores, int tamSec,
 }
 
 
-int menu_modificacion (char* primeraOpcion, char* segundaOpcion , char* msgError,char* pedido ,sEmployee* employees, int tamEmp, sSector* sectores, int tamSec, int* opcion)
+int menu_modificacion (char* primeraOpcion, char* segundaOpcion , char* msgError, char* pedido, Employee* employees,
+                    int tamEmp, Sector* sectores, int tamSec, int* opcion)
 {
     int retorno = TRUE;
-    if (primeraOpcion != NULL && segundaOpcion != NULL && pedido != NULL && employees != NULL && tamEmp > 0 && sectores != NULL && tamSec > 0 && opcion != NULL)
+    if (primeraOpcion != NULL && segundaOpcion != NULL && pedido != NULL && employees != NULL &&
+        tamEmp > 0 && sectores != NULL && tamSec > 0 && opcion != NULL)
     {
         char buffer[3];
         printf("%s", primeraOpcion);
@@ -352,7 +357,7 @@ int menu_modificacion (char* primeraOpcion, char* segundaOpcion , char* msgError
 }
 
 
-int emp_bajaEmpleado (char* msg, char* msgError, sEmployee* employees, int tamEmp, sSector* sectores, int tamSec)
+int emp_bajaEmpleado (char* msg, char* msgError, Employee* employees, int tamEmp, Sector* sectores, int tamSec)
 {
     int retorno = FALSE;
     if (msg != NULL && msgError != NULL && employees != NULL && tamEmp > 0 && sectores != NULL && tamSec > 0)
@@ -380,7 +385,7 @@ int emp_bajaEmpleado (char* msg, char* msgError, sEmployee* employees, int tamEm
 }
 
 
-void emp_burbujeoNombre (sEmployee* employee, int tamEmp)
+void emp_burbujeoNombre (Employee* employee, int tamEmp)
 {
     int flag;
     do
@@ -402,17 +407,16 @@ void emp_burbujeoNombre (sEmployee* employee, int tamEmp)
 }
 
 
-void emp_swap (sEmployee* pa, sEmployee* pb)
+void emp_swap (Employee* pa, Employee* pb)
 {
-    sEmployee buffer;
+    Employee buffer;
     buffer = *pa;
     *pa = *pb;
     *pb = buffer;
 }
 
 
-
-void emp_burbujeoPromedio (sEmployee* employee, int tamEmp, sSector* sectores, int tamSec)
+void emp_burbujeoPromedio (Employee* employee, int tamEmp, Sector* sectores, int tamSec)
 {
     int cont = 0;
     float acum = 0;
@@ -439,7 +443,7 @@ void emp_burbujeoPromedio (sEmployee* employee, int tamEmp, sSector* sectores, i
 }
 
 
-int emp_listado (char* primeraOpcion, char* segundaOpcion, char* msg, char* msgError, sEmployee* employees, int tamEmp, sSector* sectores, int tamSec)
+int emp_listado (char* primeraOpcion, char* segundaOpcion, char* msg, char* msgError, Employee* employees, int tamEmp, Sector* sectores, int tamSec)
 {
     int retorno = FALSE;
     if (primeraOpcion != NULL && segundaOpcion != NULL && msg != NULL && msgError != NULL && employees != NULL && tamEmp > 0 && sectores != NULL && tamSec > 0)

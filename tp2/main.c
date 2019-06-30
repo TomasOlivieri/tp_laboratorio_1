@@ -42,11 +42,11 @@
 
 int main()
 {
-    sEmployee employee[TAM_EMPLOYEE];
-    sSector sector[TAM_SECTOR];
+    Employee employee[TAM_EMPLOYEE];
+    Sector sector[TAM_SECTOR];
+
     if (emp_init(employee, TAM_EMPLOYEE) && sec_init(sector, TAM_SECTOR))
     {
-        emp_hardcode(employee, TAM_EMPLOYEE);
         int opcion;
         do
         {
@@ -92,6 +92,11 @@ int main()
                     break;
                 case 5:
                     printf("salir\n");
+                    break;
+                case 6:
+                    emp_showEmployees(employee, sector, TAM_SECTOR, TAM_EMPLOYEE);
+                    system("pause");
+
                     break;
                 default:
                     printf("Usted ingreso una opcion erronea\n");

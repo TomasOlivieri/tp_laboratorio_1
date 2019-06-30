@@ -82,3 +82,43 @@
 	"validacion.h"
 	"employee.h"
 
+1561924954 source:c:\users\prudan\desktop\tp_laboratorio_1\tp2\employee.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
+1561907081 c:\users\prudan\desktop\tp_laboratorio_1\tp2\olivieri.h
+
+1561907081 c:\users\prudan\desktop\tp_laboratorio_1\tp2\validacion.h
+
+1561907081 c:\users\prudan\desktop\tp_laboratorio_1\tp2\employee.h
+
+1561925038 source:c:\users\prudan\desktop\tp_laboratorio_1\tp2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
+1561907081 source:c:\users\prudan\desktop\tp_laboratorio_1\tp2\olivieri.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
+1561907081 source:c:\users\prudan\desktop\tp_laboratorio_1\tp2\validacion.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"olivieri.h"
+	"validacion.h"
+	"employee.h"
+
